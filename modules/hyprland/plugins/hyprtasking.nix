@@ -12,9 +12,9 @@
         exit_on_hovered = false;
       };
 
-      bind = [
-        "ALT, up, hyprtasking:toggle, cursor"
-      ];
+      # bind = [
+      #   "ALT, up, hyprtasking:toggle, cursor"
+      # ];
     };
   };
 }

@@ -11,11 +11,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
-    # Hyprland
-    hyprland.url = "github:hyprwm/Hyprland/v0.49.0";
-    
+    hyprland.url = "github:hyprwm/Hyprland";
+
     hyprland-plugins = {
       url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    hyprsplit = {
+      url = "github:shezdy/hyprsplit";
       inputs.hyprland.follows = "hyprland";
     };
 
@@ -31,6 +35,7 @@
     hyprland,
     hyprland-plugins,
     hyprtasking,
+    hyprsplit,
     ...
   }@inputs:
     let

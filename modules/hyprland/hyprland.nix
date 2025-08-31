@@ -7,11 +7,11 @@
     hyprpaper
     xfce.thunar
     nwg-clipman
+    hyprshot
   ];
 
   home.pointerCursor = {
     gtk.enable = true;
-    # x11.enable = true;
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Classic";
     size = 16;
@@ -106,6 +106,20 @@
           # "borderangle, 1, 30,  fluent_decel, once" # for animating the border's gradient angle - styles: once (default), loop
           "workspaces,  1, 4,   easeOutCubic, fade" # styles: slide, slidevert, fade, slidefade, slidefadevert
         ];
+      };
+
+      general = {
+        gaps_in = 5;
+        gaps_out = 10;
+
+        border_size = 2;
+
+        col.active_border = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+        col.inactive_border = "rgba(595959aa)";
+
+        resize_on_border = false;
+
+        allow_tearing = false;
       };
 
       dwindle = {
