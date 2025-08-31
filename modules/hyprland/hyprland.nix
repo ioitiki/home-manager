@@ -37,8 +37,7 @@
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = null;
-    portalPackage = null;
+    package = inputs.hyprland.packages.${pkgs.system}.hyprland;
     xwayland.enable = true;
 
     settings = {
@@ -148,7 +147,6 @@
       ];
 
       bind = [
-        "$mainMod, tab, hyprexpo:expo, toggle"
         "$mainMod, Q, exec, $terminal"
         "$mainMod, C, killactive,"
         "$mainMod, M, exit,"

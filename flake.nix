@@ -13,15 +13,23 @@
     
     # Hyprland
     hyprland.url = "github:hyprwm/Hyprland";
-    
-    # Hyprland plugins
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
+
+    hyprtasking = {
+      url = "github:raybbian/hyprtasking";
       inputs.hyprland.follows = "hyprland";
     };
+    
+    # hyprland-plugins = {
+    #   url = "github:hyprwm/hyprland-plugins";
+    #   inputs = {
+    #     hyprland = {
+    #       follows = "hyprland";
+    #     };
+    #   };
+    # };
   };
 
-  outputs = { nixpkgs, home-manager, hyprland, hyprland-plugins, ... }@inputs:
+  outputs = { nixpkgs, home-manager, hyprland, hyprtasking, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};

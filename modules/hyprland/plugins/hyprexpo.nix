@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ inputs, pkgs, ... }:
 {
   wayland.windowManager.hyprland = {
     plugins = [ inputs.hyprland-plugins.packages.${pkgs.system}.hyprexpo ];
@@ -13,5 +13,11 @@
         workspace_method = "first 1";
       };
     };
+
+    extraConfig = ''
+      # hyprlang noerror true
+      bind=$mainMod, tab, hyprexpo:expo, toggle
+      # hyprlang noerror false
+    '';
   };
 }
