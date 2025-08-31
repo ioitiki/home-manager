@@ -81,46 +81,6 @@
         "$mainMod SHIFT, j, hy3:movewindow, d, once"
         "$mainMod SHIFT, k, hy3:movewindow, u, once"
         "$mainMod SHIFT, l, hy3:movewindow, r, once"
-        
-        # Window movement (visible)
-        "$mainMod CTRL, h, hy3:movewindow, l, visible"
-        "$mainMod CTRL, j, hy3:movewindow, d, visible"
-        "$mainMod CTRL, k, hy3:movewindow, u, visible"
-        "$mainMod CTRL, l, hy3:movewindow, r, visible"
-        
-        # Focus parent/child
-        "$mainMod, a, hy3:focusparent"
-        "$mainMod, d, hy3:focuschild"
-        
-        # Resizing
-        "$mainMod, equal, hy3:resizeactive, exact, 100, 0"
-        "$mainMod, minus, hy3:resizeactive, exact, -100, 0"
-        "$mainMod SHIFT, equal, hy3:resizeactive, exact, 0, 100"
-        "$mainMod SHIFT, minus, hy3:resizeactive, exact, 0, -100"
-        
-        # Tab group management
-        "$mainMod, g, hy3:makegroup, h, force_ephemeral"
-        "$mainMod, v, hy3:makegroup, v, force_ephemeral"
-        "$mainMod, t, hy3:makegroup, tab"
-        "$mainMod SHIFT, t, hy3:makegroup, opposite"
-        "$mainMod CTRL, t, hy3:changegroup, toggletab"
-        
-        # Tab switching
-        "$mainMod, bracketleft, hy3:changegroup, b"
-        "$mainMod, bracketright, hy3:changegroup, f"
-        
-        # Splits
-        "$mainMod, s, hy3:changefocus, raise"
-        "$mainMod SHIFT, s, hy3:changefocus, lower"
-        
-        # Window control
-        "$mainMod, w, hy3:killactive"
-        "$mainMod, f, fullscreen, 1"
-        "$mainMod SHIFT, f, fullscreen, 0"
-        
-        # Expand/collapse
-        "$mainMod, e, hy3:expand, expand"
-        "$mainMod SHIFT, e, hy3:expand, base"
       ];
     };
   };
