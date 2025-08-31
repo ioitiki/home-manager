@@ -3,9 +3,7 @@
 {
   imports = [
     ./zsh.nix
-    ./modules/waybar/waybar.nix
-    ./modules/hyprland/hyprexpo.nix
-    ./modules/hyprland/hyprland.nix
+    ./modules
   ];
 
   home.username = "andy";
