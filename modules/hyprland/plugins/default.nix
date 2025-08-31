@@ -1,4 +1,7 @@
 { inputs, ... }:
 {
-  imports = [ ./hyprtasking.nix ];
+  imports = [
+    # ./hyprtasking.nix
+    ./hy3.nix
+  ];
 }

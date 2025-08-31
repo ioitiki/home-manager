@@ -111,25 +111,20 @@
       general = {
         gaps_in = 5;
         gaps_out = 10;
-
         border_size = 2;
-
-        col.active_border = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-        col.inactive_border = "rgba(595959aa)";
-
         resize_on_border = false;
-
         allow_tearing = false;
       };
 
-      dwindle = {
-        pseudotile = true;
-        preserve_split = true;
-      };
-
-      master = {
-        new_status = "master";
-      };
+      # dwindle and master layouts are disabled when using hy3
+      # dwindle = {
+      #   pseudotile = true;
+      #   preserve_split = true;
+      # };
+      #
+      # master = {
+      #   new_status = "master";
+      # };
 
       misc = {
         force_default_wallpaper = -1;
@@ -168,12 +163,9 @@
         "$mainMod, E, exec, $fileManager"
         "$mainMod, V, togglefloating,"
         "CTRL, SPACE, exec, $menu"
-        "$mainMod, P, pseudo, "
-        "$mainMod, J, togglesplit, "
-        "$mainMod, left, movefocus, l"
-        "$mainMod, right, movefocus, r"
-        "$mainMod, up, movefocus, u"
-        "$mainMod, down, movefocus, d"
+        # "$mainMod, P, pseudo, "  # Not needed with hy3
+        # "$mainMod, J, togglesplit, "  # Not needed with hy3
+        # Movement handled by hy3 plugin keybindings
         "$mainMod, 1, workspace, 1"
         "$mainMod, 2, workspace, 2"
         "$mainMod, 3, workspace, 3"

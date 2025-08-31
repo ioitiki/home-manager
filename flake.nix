@@ -11,20 +11,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     
-    hyprland.url = "github:hyprwm/Hyprland";
-
-    hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins";
-      inputs.hyprland.follows = "hyprland";
-    };
-
-    hyprsplit = {
-      url = "github:shezdy/hyprsplit";
-      inputs.hyprland.follows = "hyprland";
-    };
+    hyprland.url = "github:hyprwm/Hyprland/v0.50.0";
 
     hyprtasking = {
       url = "github:raybbian/hyprtasking";
+      inputs.hyprland.follows = "hyprland";
+    };
+
+    hy3 = {
+      url = "github:outfoxxed/hy3?ref=hl0.50.0";
       inputs.hyprland.follows = "hyprland";
     };
   };
@@ -33,9 +28,8 @@
     nixpkgs,
     home-manager,
     hyprland,
-    hyprland-plugins,
     hyprtasking,
-    hyprsplit,
+    hy3,
     ...
   }@inputs:
     let
