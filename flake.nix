@@ -23,11 +23,6 @@
       url = "github:raybbian/hyprtasking";
       inputs.hyprland.follows = "hyprland";
     };
-
-    hyprshot = {
-      url = "github:Gustash/hyprshot";
-      inputs.hyprland.follows = "hyprland";
-    };
   };
 
   outputs = {
@@ -36,7 +31,6 @@
     hyprland,
     hyprland-plugins,
     hyprtasking,
-    hyprshot,
     ...
   }@inputs:
     let
