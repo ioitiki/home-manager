@@ -12,12 +12,10 @@
         bg_col = "rgb(a89984)";
         workspace_method = "first 1";
       };
-    };
 
-    extraConfig = ''
-      # hyprlang noerror true
-      bind=$mainMod, tab, hyprexpo:expo, toggle
-      # hyprlang noerror false
-    '';
+      bind = [
+        "$mainMod, tab, hyprexpo:expo, toggle"
+      ];
+    };
   };
 }

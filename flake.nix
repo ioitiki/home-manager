@@ -12,24 +12,20 @@
     };
     
     # Hyprland
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland.url = "github:hyprwm/Hyprland/v0.49.0";
 
     hyprtasking = {
       url = "github:raybbian/hyprtasking";
       inputs.hyprland.follows = "hyprland";
     };
     
-    # hyprland-plugins = {
-    #   url = "github:hyprwm/hyprland-plugins";
-    #   inputs = {
-    #     hyprland = {
-    #       follows = "hyprland";
-    #     };
-    #   };
-    # };
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
   };
 
-  outputs = { nixpkgs, home-manager, hyprland, hyprtasking, ... }@inputs:
+  outputs = { nixpkgs, home-manager, hyprland, hyprtasking, hyprland-plugins, ... }@inputs:
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
