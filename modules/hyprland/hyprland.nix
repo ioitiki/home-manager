@@ -6,6 +6,7 @@
     wofi
     hyprpaper
     xfce.thunar
+    nwg-clipman
   ];
 
   home.pointerCursor = {
