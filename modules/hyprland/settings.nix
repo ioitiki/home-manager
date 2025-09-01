@@ -5,7 +5,7 @@
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";
       "$fileManager" = "thunar";
-      "$menu" = "wofi --show drun";
+      "$menu" = "rofi -show combi -combi-modes \"window,drun\" -modes combi";
 
       exec-once = [
         "waybar & hyprpaper"
@@ -122,9 +122,10 @@
       bind = [
         "$mainMod, Q, exec, $terminal"
         "$mainMod, C, killactive,"
-        "$mainMod, M, exit,"
+        "$mainMod CTRL, M, exit,"
         "$mainMod, E, exec, $fileManager"
         "$mainMod, V, togglefloating,"
+        "$mainMod, M, fullscreen, 0"  # Toggle fullscreen (mono layout)
         "CTRL, SPACE, exec, $menu"
         # "$mainMod, P, pseudo, "  # Not needed with hy3
         # "$mainMod, J, togglesplit, "  # Not needed with hy3
@@ -179,7 +180,24 @@
 
       # windowrule
       windowrule = [
-        "float,class:^(alacritty)$,title:^(alacritty)$"
+        "float,class:^(file_progress)$"
+        "float,class:^(confirm)$"
+        "float,class:^(dialog)$"
+        "float,class:^(download)$"
+        "float,class:^(notification)$"
+        "float,class:^(error)$"
+        "float,class:^(confirmreset)$"
+        "float,title:^(Open File)$"
+        "float,title:^(File Upload)$"
+        "float,title:^(branchdialog)$"
+        "float,title:^(Confirm to replace files)$"
+        "float,title:^(File Operation Progress)$"
+        "float,class:^(DBeaver)$"
+        "float,class:^(dbeaver)$"
+        "float,class:^(Slack)$"
+        "float,class:^(slack)$"
+        "float,class:^(Alacritty)$"
+        "float,class:^(alacritty)$"
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
       ];

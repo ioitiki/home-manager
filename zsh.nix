@@ -45,6 +45,7 @@
       clean = "nix-collect-garbage";
       config = "sudo nix-shell -p zed-editor --run 'cursor /etc/nixos'";
       update = "sudo nixos-rebuild switch";
+      hms = "home-manager switch --flake .#andy";
       nshell = "nix-shell -p";
       # git
       spp = "git stash && git pull && git stash pop";

@@ -18,6 +18,11 @@
       inputs.hyprland.follows = "hyprland";
     };
 
+    hyprland-plugins = {
+      url = "github:hyprwm/hyprland-plugins";
+      inputs.hyprland.follows = "hyprland";
+    };
+
     hy3 = {
       url = "github:outfoxxed/hy3?ref=hl0.50.0";
       inputs.hyprland.follows = "hyprland";
@@ -30,6 +35,7 @@
     hyprland,
     hyprtasking,
     hy3,
+    hyprland-plugins,
     ...
   }@inputs:
     let

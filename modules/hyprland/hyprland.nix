@@ -3,11 +3,13 @@
 {
   # User-level packages used with Hyprland
   home.packages = with pkgs; [
-    wofi
+    rofi-wayland
     hyprpaper
     xfce.thunar
     nwg-clipman
     hyprshot
+    sublime
+    sublime-merge
     
     # Dark theme support for various apps
     adwaita-qt
