@@ -10,13 +10,13 @@
       # hy3 plugin configuration
       plugin.hy3 = {
         # Removes gaps when only one window is open
-        no_gaps_when_only = 1;
+        no_gaps_when_only = 0;
         
         # Node collapse policy
         # 0 - never
         # 1 - no_gaps_when_only
         # 2 - always
-        node_collapse_policy = 2;
+        node_collapse_policy = 0;
         
         # Group window inset
         group_inset = 10;

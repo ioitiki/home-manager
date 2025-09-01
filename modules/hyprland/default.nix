@@ -2,6 +2,7 @@
 {
   imports = [
     ./hyprland.nix
+    ./hyprpaper.nix
     ./settings.nix
     ./variables.nix
     ./plugins

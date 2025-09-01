@@ -90,7 +90,7 @@
       # };
 
       misc = {
-        force_default_wallpaper = -1;
+        force_default_wallpaper = 0;  # Disable Hyprland's default wallpaper
         disable_hyprland_logo = false;
       };
 
