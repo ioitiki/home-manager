@@ -13,8 +13,6 @@
       rezsh = "source ~/.zshrc";
       zshrc = "cursor ~/.zshrc";
       # cursor
-      subm = "sublime_merge .";
-      sm = "sublime_merge .";
       code = "cursor";
       cod = "cursor";
       s = "cursor";

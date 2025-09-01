@@ -10,6 +10,9 @@
 
       exec-once = [
         "waybar & hyprpaper"
+        "wl-paste --type text --watch cliphist store"
+        "wl-paste --type image --watch cliphist store"
+        "hypridle"
       ];
 
       decoration = {
@@ -101,10 +104,11 @@
         "$mainMod, C, killactive,"
         "$mainMod CTRL, M, exit,"
         "$mainMod, E, exec, $fileManager"
-        "$mainMod, V, togglefloating,"
+        "$mainMod, F, togglefloating,"
         "$mainMod, M, fullscreen, 0"  # Toggle fullscreen (mono layout)
         "CTRL, SPACE, exec, $menu"
         "CTRL SHIFT, 4, exec, $screenShotRegion"
+        "$mainMod, V, exec, nwg-clipman"
         # "$mainMod, P, pseudo, "  # Not needed with hy3
         # "$mainMod, J, togglesplit, "  # Not needed with hy3
         # Movement handled by hy3 plugin keybindings

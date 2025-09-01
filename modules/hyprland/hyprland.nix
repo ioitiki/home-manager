@@ -7,9 +7,9 @@
     hyprpaper
     xfce.thunar
     nwg-clipman
+    cliphist
+    wl-clipboard
     hyprshot
-    sublime
-    sublime-merge
     
     # Dark theme support for various apps
     adwaita-qt
