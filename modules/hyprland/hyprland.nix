@@ -8,26 +8,30 @@
     xfce.thunar
     nwg-clipman
     hyprshot
+    
+    # Dark theme support for various apps
+    adwaita-qt
+    adwaita-qt6
   ];
 
   home.pointerCursor = {
     gtk.enable = true;
     package = pkgs.bibata-cursors;
     name = "Bibata-Modern-Classic";
-    size = 16;
+    size = 13;
   };
 
   gtk = {
     enable = true;
 
     theme = {
-      package = pkgs.flat-remix-gtk;
-      name = "Flat-Remix-GTK-Grey-Darkest";
+      package = pkgs.dracula-theme;
+      name = "Dracula";
     };
 
     iconTheme = {
-      package = pkgs.adwaita-icon-theme;
-      name = "Adwaita";
+      package = pkgs.dracula-icon-theme;
+      name = "Dracula";
     };
 
     font = {

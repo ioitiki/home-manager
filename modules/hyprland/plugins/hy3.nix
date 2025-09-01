@@ -68,19 +68,16 @@
         };
       };
 
-      # hy3-specific keybindings
+      # # hy3-specific keybindings
       bind = [
-        # Movement
-        "$mainMod, h, hy3:movefocus, l"
-        "$mainMod, j, hy3:movefocus, d"
-        "$mainMod, k, hy3:movefocus, u"
-        "$mainMod, l, hy3:movefocus, r"
+        "$mainMod, left, hy3:movewindow, left"
+        "$mainMod, down, hy3:movewindow, down"
+        "$mainMod, up, hy3:movewindow, up"
+        "$mainMod, right, hy3:movewindow, right"
         
         # Window movement
-        "$mainMod SHIFT, h, hy3:movewindow, l, once"
-        "$mainMod SHIFT, j, hy3:movewindow, d, once"
-        "$mainMod SHIFT, k, hy3:movewindow, u, once"
-        "$mainMod SHIFT, l, hy3:movewindow, r, once"
+        "$mainMod SHIFT, left, movewindow, mon:l"
+        "$mainMod SHIFT, right, movewindow, mon:r"
       ];
     };
   };
