@@ -24,6 +24,10 @@
       resources
       lsof
       xarchiver
+      vivaldi
+      vivaldi-ffmpeg-codecs
+      _1password
+      _1password-gui
     ];
   };
 

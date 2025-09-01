@@ -81,6 +81,8 @@
       bd = "base64d";
       be = "base64e";
 
+      nhash = "getHash";
+
       # cursor = "nohup /run/current-system/sw/bin/cursor > /dev/null 2>&1 &";
     };
 
@@ -111,6 +113,10 @@
       
       base64e() {
         printf "$1" | base64 -w 0; echo
+      }
+
+      getHash() {
+        nix hash to-sri --type sha256 $(nix-prefetch-url --type sha256 $1)
       }
     '';
   };
