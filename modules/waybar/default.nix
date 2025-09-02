@@ -1,40 +1,40 @@
-{ ... }:
+{ pkgs, ... }:
 let
   custom = {
-    font = "Maple Mono";
+    font = "FiraCode Nerd Font";
     font_size = "18px";
     font_weight = "bold";
-    text_color = "#FBF1C7";
-    background_0 = "#1D2021";
-    background_1 = "#282828";
-    border_color = "#A89984";
-    red = "#CC241D";
-    green = "#98971A";
-    yellow = "#FABD2F";
-    blue = "#458588";
-    magenta = "#B16286";
-    cyan = "#689D6A";
-    orange = "#D65D0E";
-    orange_bright = "#FE8019";
+    text_color = "#F8F8F2";
+    background_0 = "#1E1F29";
+    background_1 = "#282A36";
+    border_color = "#44475A";
+    red = "#FF5555";
+    green = "#50FA7B";
+    yellow = "#F1FA8C";
+    blue = "#6272A4";
+    magenta = "#BD93F9";
+    cyan = "#8BE9FD";
+    orange = "#FFB86C";
+    orange_bright = "#FFD1A6";
     opacity = "1";
     indicator_height = "2px";
   };
 
   customSettings = {
-    font = "Maple Mono";
+    font = "FiraCode Nerd Font";
     font_size = "18px";
     font_weight = "bold";
-    text_color = "#FBF1C7";
-    background_0 = "#1D2021";
-    background_1 = "#282828";
-    border_color = "#928374";
-    red = "#CC241D";
-    green = "#98971A";
-    yellow = "#FABD2F";
-    blue = "#458588";
-    magenta = "#B16286";
-    cyan = "#689D6A";
-    orange = "#D65D0E";
+    text_color = "#F8F8F2";
+    background_0 = "#1E1F29";
+    background_1 = "#282A36";
+    border_color = "#44475A";
+    red = "#FF5555";
+    green = "#50FA7B";
+    yellow = "#F1FA8C";
+    blue = "#6272A4";
+    magenta = "#BD93F9";
+    cyan = "#8BE9FD";
+    orange = "#FFB86C";
     opacity = "1";
     indicator_height = "2px";
   };
@@ -42,7 +42,7 @@ in
 {
   programs.waybar.enable = true;
 
-  programs.waybar.settings.mainBar = with customSettings; {
+  programs.waybar.settings.leftBar = with customSettings; {
     position = "top";
     layer = "top";
     height = 28;
@@ -50,12 +50,86 @@ in
     margin-bottom = 0;
     margin-left = 0;
     margin-right = 0;
+    output = [ "DP-3" ];
     modules-left = [
       "custom/launcher"
       "hyprland/workspaces"
+      "wlr/taskbar"
       "tray"
     ];
-    modules-center = [ "clock" ];
+    modules-center = [ ];
+    modules-right = [ "clock" ];
+    cpu = {
+      format = "<span foreground='${green}'> </span> {usage}%";
+      format-alt = "<span foreground='${green}'> </span> {avg_frequency} GHz";
+      interval = 2;
+      on-click-right = "hyprctl dispatch exec '[float; center; size 950 650] kitty --override font_size=14 --title float_kitty btop'";
+    };
+    memory = {
+      format = "<span foreground='${cyan}'>󰟜 </span>{}%";
+      format-alt = "<span foreground='${cyan}'>󰟜 </span>{used} GiB"; # 
+      interval = 2;
+      on-click-right = "hyprctl dispatch exec '[float; center; size 950 650] kitty --override font_size=14 --title float_kitty btop'";
+    };
+    disk = {
+      # path = "/";
+      format = "<span foreground='${orange}'>󰋊 </span>{percentage_used}%";
+      interval = 60;
+      on-click-right = "hyprctl dispatch exec '[float; center; size 950 650] kitty --override font_size=14 --title float_kitty btop'";
+    };
+    network = {
+      format-wifi = "<span foreground='${magenta}'> </span> {signalStrength}%";
+      format-ethernet = "<span foreground='${magenta}'>󰀂 </span>";
+      tooltip-format = "Connected to {essid} {ifname} via {gwaddr}";
+      format-linked = "{ifname} (No IP)";
+      format-disconnected = "<span foreground='${magenta}'>󰖪 </span>";
+    };
+    "wlr/taskbar" = {
+      format = "{icon}";
+      icon-size = 18;
+      icon-theme = "Papirus";
+      all-outputs = false;
+      tooltip-format = "{app_id} — {title}";
+      on-click = "activate";
+      on-click-middle = "close";
+      on-click-right = "minimize";
+    };
+    clock = {
+      format = "{:%I:%M %p}";
+      tooltip-format = "{:%A, %B %d, %Y  %I:%M:%S %p}";
+    };
+    tray = {
+      icon-size = 20;
+      spacing = 8;
+    };
+    pulseaudio = {
+      format = "{icon} {volume}%";
+      format-muted = "<span foreground='${blue}'> </span> {volume}%";
+      format-icons = {
+        default = [ "<span foreground='${blue}'> </span>" ];
+      };
+      scroll-step = 2;
+      on-click = "pamixer -t";
+      on-click-right = "pavucontrol";
+    };
+  };
+
+  programs.waybar.settings.rightBar = with customSettings; {
+    position = "top";
+    layer = "top";
+    height = 28;
+    margin-top = 0;
+    margin-bottom = 0;
+    margin-left = 0;
+    margin-right = 0;
+    output = [ "HDMI-A-1" ];
+    modules-left = [
+      "custom/launcher"
+      "hyprland/workspaces"
+      "wlr/taskbar"
+      "tray"
+    ];
+    modules-center = [ ];
     modules-right = [
       "cpu"
       "memory"
@@ -88,6 +162,20 @@ in
       format-linked = "{ifname} (No IP)";
       format-disconnected = "<span foreground='${magenta}'>󰖪 </span>";
     };
+    "wlr/taskbar" = {
+      format = "{icon}";
+      icon-size = 18;
+      icon-theme = "Papirus";
+      all-outputs = false;
+      tooltip-format = "{app_id} — {title}";
+      on-click = "activate";
+      on-click-middle = "close";
+      on-click-right = "minimize";
+    };
+    clock = {
+      format = "{:%I:%M %p}";
+      tooltip-format = "{:%A, %B %d, %Y  %I:%M:%S %p}";
+    };
     tray = {
       icon-size = 20;
       spacing = 8;
@@ -110,14 +198,14 @@ in
       border-radius: 0px;
       padding: 0;
       margin: 0;
-      font-family: ${font};
+      font-family: ${font}, "Symbols Nerd Font", "Font Awesome 6 Free", "Font Awesome 6 Brands", "Font Awesome 5 Free";
       font-weight: ${font_weight};
       opacity: ${opacity};
       font-size: ${font_size};
     }
 
     window#waybar {
-      background: #282828;
+      background: ${background_0};
       border-top: 1px solid ${border_color};
     }
 
@@ -148,6 +236,7 @@ in
 
     #clock {
       color: ${text_color};
+      margin-right: 20px;
     }
 
     #tray {
@@ -187,5 +276,50 @@ in
       margin-left: 15px;
       padding-right: 10px;
     }
+
+    #taskbar {
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-right: 10px;
+    }
+    #taskbar button {
+      padding-left: 6px;
+      padding-right: 6px;
+      color: ${text_color};
+    }
+    #taskbar button.active {
+      color: ${orange_bright};
+    }
   '';
+
+  home.file.".config/waybar/scripts/hypr-windows.sh" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      if ! command -v jq >/dev/null 2>&1; then
+        notify-send "hypr-windows" "jq is not installed"
+        exit 1
+      fi
+
+      active_ws_id=$(hyprctl activeworkspace -j | jq -r '.id')
+      clients_json=$(hyprctl clients -j)
+
+      # Build menu of windows on the active workspace
+      menu=$(echo "$clients_json" | jq -r --argjson ws "$active_ws_id" '
+        .[]
+        | select(.workspace.id == $ws and .mapped == true)
+        | "\(.address)\t\(.class)\t\(.title)"')
+
+      [ -z "$menu" ] && exit 0
+
+      choice=$(echo "$menu" | rofi -dmenu -i -p "Windows" -sep "\t" -theme "$HOME/.config/rofi/themes/custom.rasi" \
+        | awk '{print $1}')
+
+      [ -z "$choice" ] && exit 0
+
+      hyprctl dispatch focuswindow "address:$choice"
+    '';
+  };
 }

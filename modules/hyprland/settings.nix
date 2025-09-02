@@ -182,6 +182,7 @@
         "float,class:^(slack)$"
         "float,class:^(Alacritty)$"
         "float,class:^(alacritty)$"
+        "float,title:^(Sign in - Google Accounts - Vivaldi)$"
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
       ];
@@ -189,6 +190,8 @@
       windowrulev2 = [
         "workspace special:magic silent, class:^(Slack)$"
         "workspace special:magic silent, class:^(slack)$"
+        "workspace special:magic silent, class:^(Rambox)$"
+        "workspace special:magic silent, class:^(rambox)$"
       ];
 
       monitor = [
