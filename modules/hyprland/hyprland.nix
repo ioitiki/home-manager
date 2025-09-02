@@ -3,7 +3,6 @@
 {
   # User-level packages used with Hyprland
   home.packages = with pkgs; [
-    rofi-wayland
     hyprpaper
     xfce.thunar
     nwg-clipman

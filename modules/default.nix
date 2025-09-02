@@ -2,7 +2,8 @@
 {
   imports = [
     ./hyprland
-    ./waybar/waybar.nix
+    ./rofi
+    ./waybar
     ./xdg-mimes.nix
   ];
 }

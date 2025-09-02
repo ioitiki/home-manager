@@ -28,6 +28,8 @@
       vivaldi-ffmpeg-codecs
       _1password
       _1password-gui
+      pavucontrol
+      pamixer
     ];
   };
 

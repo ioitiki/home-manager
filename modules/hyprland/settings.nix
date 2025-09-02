@@ -106,6 +106,7 @@
         "$mainMod, E, exec, $fileManager"
         "$mainMod, F, togglefloating,"
         "$mainMod, M, fullscreen, 0"  # Toggle fullscreen (mono layout)
+        "$mainMod, B, exec, sh -c \"if hyprctl getoption plugin:hyprbars:enabled | grep -q 'int: 1'; then hyprctl keyword plugin:hyprbars:enabled 0; else hyprctl keyword plugin:hyprbars:enabled 1; fi\""
         "CTRL, SPACE, exec, $menu"
         "CTRL SHIFT, 4, exec, $screenShotRegion"
         "$mainMod, V, exec, nwg-clipman"
@@ -183,6 +184,11 @@
         "float,class:^(alacritty)$"
         "suppressevent maximize, class:.*"
         "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
+      ];
+
+      windowrulev2 = [
+        "workspace special:magic silent, class:^(Slack)$"
+        "workspace special:magic silent, class:^(slack)$"
       ];
 
       monitor = [
