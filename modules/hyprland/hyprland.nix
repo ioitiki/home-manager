@@ -9,11 +9,20 @@
     cliphist
     wl-clipboard
     hyprshot
-    
+
     # Dark theme support for various apps
     adwaita-qt
     adwaita-qt6
   ];
+
+  services.mako = {
+    enable = true;
+    extraConfig = ''
+      background-color=#000000
+      text-color=#FFFFFF
+      border-color=#bd93f9
+    '';
+  };
 
   home.pointerCursor = {
     gtk.enable = true;
@@ -47,4 +56,3 @@
     xwayland.enable = true;
   };
 }
-

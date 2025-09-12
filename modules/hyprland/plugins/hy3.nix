@@ -11,16 +11,16 @@
       plugin.hy3 = {
         # Removes gaps when only one window is open
         no_gaps_when_only = 0;
-        
+
         # Node collapse policy
         # 0 - never
         # 1 - no_gaps_when_only
         # 2 - always
         node_collapse_policy = 0;
-        
+
         # Group window inset
         group_inset = 10;
-        
+
         # Whether to place the first window in a group when it's created
         tab_first_window = false;
 
@@ -36,7 +36,7 @@
           text_font = "Sans";
           text_height = 8;
           text_padding = 3;
-          
+
           # Tab colors
           "col.active" = "rgba(33ccff40)";
           "col.active.border" = "rgba(33ccffee)";
@@ -53,7 +53,7 @@
           "col.locked" = "rgba(90903340)";
           "col.locked.border" = "rgba(909033ee)";
           "col.locked.text" = "rgba(ffffffff)";
-          
+
           blur = true;
           opacity = 1.0;
         };
@@ -70,14 +70,18 @@
 
       # # hy3-specific keybindings
       bind = [
-        "$mainMod, left, hy3:movewindow, left"
         "$mainMod, down, hy3:movewindow, down"
         "$mainMod, up, hy3:movewindow, up"
+        "$mainMod, left, hy3:movewindow, left"
         "$mainMod, right, hy3:movewindow, right"
-        
+        "ALT SHIFT, left, hy3:movewindow, left"
+        "ALT SHIFT, right, hy3:movewindow, right"
+
         # Window movement
         "$mainMod SHIFT, left, movewindow, mon:l"
         "$mainMod SHIFT, right, movewindow, mon:r"
+        "$mainMod, j, hy3:movefocus, left"
+        "$mainMod, k, hy3:movefocus, right"
       ];
     };
   };

@@ -1,10 +1,11 @@
-{ pkgs, ... }:
+{ ... }:
 let
   custom = {
     font = "FiraCode Nerd Font";
     font_size = "18px";
     font_weight = "bold";
     text_color = "#F8F8F2";
+    purple = "#bd93f9";
     background_0 = "#1E1F29";
     background_1 = "#282A36";
     border_color = "#44475A";
@@ -25,6 +26,7 @@ let
     font_size = "18px";
     font_weight = "bold";
     text_color = "#F8F8F2";
+    purple = "#bd93f9";
     background_0 = "#1E1F29";
     background_1 = "#282A36";
     border_color = "#44475A";
@@ -45,7 +47,7 @@ in
   programs.waybar.settings.leftBar = with customSettings; {
     position = "top";
     layer = "top";
-    height = 28;
+    height = 30;
     margin-top = 0;
     margin-bottom = 0;
     margin-left = 0;
@@ -55,7 +57,6 @@ in
       "custom/launcher"
       "hyprland/workspaces"
       "wlr/taskbar"
-      "tray"
     ];
     modules-center = [ ];
     modules-right = [ "clock" ];
@@ -86,7 +87,7 @@ in
     };
     "wlr/taskbar" = {
       format = "{icon}";
-      icon-size = 18;
+      icon-size = 20;
       icon-theme = "Papirus";
       all-outputs = false;
       tooltip-format = "{app_id} — {title}";
@@ -95,7 +96,7 @@ in
       on-click-right = "minimize";
     };
     clock = {
-      format = "{:%I:%M %p}";
+      format = "{:%a %b %d  %I:%M %p}";
       tooltip-format = "{:%A, %B %d, %Y  %I:%M:%S %p}";
     };
     tray = {
@@ -117,7 +118,7 @@ in
   programs.waybar.settings.rightBar = with customSettings; {
     position = "top";
     layer = "top";
-    height = 28;
+    height = 30;
     margin-top = 0;
     margin-bottom = 0;
     margin-left = 0;
@@ -127,10 +128,10 @@ in
       "custom/launcher"
       "hyprland/workspaces"
       "wlr/taskbar"
-      "tray"
     ];
     modules-center = [ ];
     modules-right = [
+      "tray"
       "cpu"
       "memory"
       "disk"
@@ -164,7 +165,7 @@ in
     };
     "wlr/taskbar" = {
       format = "{icon}";
-      icon-size = 18;
+      icon-size = 20;
       icon-theme = "Papirus";
       all-outputs = false;
       tooltip-format = "{app_id} — {title}";
@@ -173,7 +174,7 @@ in
       on-click-right = "minimize";
     };
     clock = {
-      format = "{:%I:%M %p}";
+      format = "{:%a %b %d  %I:%M %p}";
       tooltip-format = "{:%A, %B %d, %Y  %I:%M:%S %p}";
     };
     tray = {
@@ -231,16 +232,17 @@ in
       color: ${text_color};
     }
     #workspaces button.active {
-      color: ${orange_bright};
+      color: ${purple};
     }
 
     #clock {
       color: ${text_color};
+      margin-top: 2px;
       margin-right: 20px;
     }
 
     #tray {
-      margin-left: 10px;
+      margin-right: 10px;
       color: ${text_color};
     }
     #tray menu {

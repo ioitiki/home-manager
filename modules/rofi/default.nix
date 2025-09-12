@@ -173,8 +173,34 @@ in
       sort: true;
       matching: "fuzzy";
       case-sensitive: false;
+      click-to-exit: true;
+      global-kb: true;
     }
   '';
+
+  # Minimal power menu script for shutdown and reboot
+  home.file.".config/rofi/power-menu.sh" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      choices="Shutdown\nReboot"
+      selection=$(printf "%b" "$choices" | rofi -dmenu -i -p "Power")
+
+      case "${selection:-}" in
+        Shutdown)
+          systemctl poweroff
+          ;;
+        Reboot)
+          systemctl reboot
+          ;;
+        *)
+          exit 0
+          ;;
+      esac
+    '';
+  };
 }
 
 

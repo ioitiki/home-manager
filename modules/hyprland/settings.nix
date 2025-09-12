@@ -6,6 +6,8 @@
       "$terminal" = "alacritty";
       "$fileManager" = "thunar";
       "$menu" = "rofi -show combi -combi-modes \"window,drun\" -modes combi";
+      "$windowMenu" = "rofi -show window";
+      "$powerMenu" = "/home/andy/.config/rofi/power-menu.sh";
       "$screenShotRegion" = "hyprshot -m region --clipboard-only";
 
       exec-once = [
@@ -20,7 +22,7 @@
         blur.enabled = false;
         shadow.enabled = false;
       };
-      
+
       animations = {
         enabled = true;
 
@@ -57,6 +59,8 @@
         border_size = 2;
         resize_on_border = false;
         allow_tearing = false;
+        "col.active_border" = "rgba(d4b3fcff) rgba(f0e6ffff) 45deg";
+        "col.inactive_border" = "rgba(5a5d73cc)";
       };
 
       # dwindle and master layouts are disabled when using hy3
@@ -70,7 +74,7 @@
       # };
 
       misc = {
-        force_default_wallpaper = 0;  # Disable Hyprland's default wallpaper
+        force_default_wallpaper = 0; # Disable Hyprland's default wallpaper
         disable_hyprland_logo = false;
       };
 
@@ -105,11 +109,17 @@
         "$mainMod CTRL, M, exit,"
         "$mainMod, E, exec, $fileManager"
         "$mainMod, F, togglefloating,"
-        "$mainMod, M, fullscreen, 0"  # Toggle fullscreen (mono layout)
+        "$mainMod, M, fullscreen, 0" # Toggle fullscreen (mono layout)
+        # Span active window across both monitors (assumes 2× 2560x1440 at 0x0 and 2560x0)
+        # Adjust numbers if your monitor layout changes
         "$mainMod, B, exec, sh -c \"if hyprctl getoption plugin:hyprbars:enabled | grep -q 'int: 1'; then hyprctl keyword plugin:hyprbars:enabled 0; else hyprctl keyword plugin:hyprbars:enabled 1; fi\""
         "CTRL, SPACE, exec, $menu"
+        "ALT, TAB, exec, $windowMenu"
+        "ALT, UP, exec, $windowMenu"
         "CTRL SHIFT, 4, exec, $screenShotRegion"
         "$mainMod, V, exec, nwg-clipman"
+        "$mainMod SHIFT, W, exec, hyprctl dispatch killactive"
+        "$mainMod, X, exec, $powerMenu"
         # "$mainMod, P, pseudo, "  # Not needed with hy3
         # "$mainMod, J, togglesplit, "  # Not needed with hy3
         # Movement handled by hy3 plugin keybindings
@@ -133,8 +143,10 @@
         "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
         "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
         "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
-        "$mainMod, S, togglespecialworkspace, magic"
-        "$mainMod SHIFT, S, movetoworkspace, special:magic"
+        "$mainMod, S, togglespecialworkspace, slack"
+        "$mainMod SHIFT, S, movetoworkspace, special:slack"
+        "$mainMod, R, togglespecialworkspace, rambox"
+        "$mainMod SHIFT, R, movetoworkspace, special:rambox"
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
       ];
@@ -188,10 +200,13 @@
       ];
 
       windowrulev2 = [
-        "workspace special:magic silent, class:^(Slack)$"
-        "workspace special:magic silent, class:^(slack)$"
-        "workspace special:magic silent, class:^(Rambox)$"
-        "workspace special:magic silent, class:^(rambox)$"
+        "workspace special:slack silent, class:^(Slack)$"
+        "workspace special:slack silent, class:^(slack)$"
+        "workspace special:rambox silent, class:^(Rambox)$"
+        "workspace special:rambox silent, class:^(rambox)$"
+        "bordercolor rgba(00ff00ff), fullscreen:1" # Green border when in fullscreen/mono mode
+        # "size 95% 95%, fullscreen:1" # Make fullscreen window slightly smaller to show border
+        # "center, fullscreen:1" # Center the fullscreen window
       ];
 
       monitor = [
@@ -199,7 +214,6 @@
         "HDMI-A-1, 2560x1440@144,2560x0,1"
       ];
 
-      # No gaps when only
       workspace = [
         "1, monitor:DP-3"
         "2, monitor:HDMI-A-1"

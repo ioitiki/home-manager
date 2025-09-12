@@ -19,6 +19,7 @@
 
   home = {
     packages = with pkgs; [
+      zed-editor-fhs
       neofetch
       cups-brother-hll2340dw
       resources
