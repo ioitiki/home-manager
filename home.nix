@@ -31,6 +31,9 @@
       _1password-gui
       pavucontrol
       pamixer
+      # Add TypeScript Language Server
+      nodePackages.typescript-language-server
+      nodePackages.typescript
     ];
   };
 

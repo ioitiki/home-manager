@@ -147,6 +147,10 @@
         "$mainMod SHIFT, S, movetoworkspace, special:slack"
         "$mainMod, R, togglespecialworkspace, rambox"
         "$mainMod SHIFT, R, movetoworkspace, special:rambox"
+        "$mainMod, D, togglespecialworkspace, dbeaver"
+        "$mainMod SHIFT, D, movetoworkspace, special:dbeaver"
+        "$mainMod, T, togglespecialworkspace, alacritty"
+        "$mainMod SHIFT, T, movetoworkspace, special:alacritty"
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
       ];
@@ -204,9 +208,19 @@
         "workspace special:slack silent, class:^(slack)$"
         "workspace special:rambox silent, class:^(Rambox)$"
         "workspace special:rambox silent, class:^(rambox)$"
+        "workspace special:dbeaver silent, class:^(DBeaver)$"
+        "workspace special:dbeaver silent, class:^(dbeaver)$"
+        "workspace special:alacritty silent, class:^(Alacritty)$"
+        "workspace special:alacritty silent, class:^(alacritty)$"
         "bordercolor rgba(00ff00ff), fullscreen:1" # Green border when in fullscreen/mono mode
         # "size 95% 95%, fullscreen:1" # Make fullscreen window slightly smaller to show border
         # "center, fullscreen:1" # Center the fullscreen window
+
+         # Add these new Cursor rules:
+        "center, class:^(Cursor)$, floating:1"
+        "center, class:^(Cursor)$, title:^(Are you sure.*)"
+        "size 400 200, class:^(Cursor)$, title:^(Are you sure.*)"
+        "center, floating:1, maxsize:600 400"
       ];
 
       monitor = [

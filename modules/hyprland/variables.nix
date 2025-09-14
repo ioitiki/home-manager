@@ -1,6 +1,7 @@
 { ... }:
 {
   home.sessionVariables = {
+    NODE_OPTIONS = "--max-old-space-size=8192"; # 8GB heap
     BROWSER = "vivaldi";
     NIXOS_OZONE_WL = 1;
     # __GL_GSYNC_ALLOWED = 0;
