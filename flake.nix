@@ -40,9 +40,16 @@
   }@inputs:
     let
       system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
+      pkgs = import nixpkgs {
+        inherit system;
+        config.allowUnfree = true;
+      };
     in
     {
+      packages.${system} = {
+        ib-tws = pkgs.callPackage ./ib-tws.nix { };
+      };
+      
       homeConfigurations."andy" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 

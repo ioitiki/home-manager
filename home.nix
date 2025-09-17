@@ -34,6 +34,8 @@
       # Add TypeScript Language Server
       nodePackages.typescript-language-server
       nodePackages.typescript
+      # Interactive Brokers TWS
+      (callPackage ./ib-tws.nix { })
     ];
   };
 
