@@ -59,7 +59,11 @@ in
       "wlr/taskbar"
     ];
     modules-center = [ ];
-    modules-right = [ "clock" ];
+    modules-right = [
+      "clock#bkk"
+      "clock#cairo"
+      "clock"
+    ];
     cpu = {
       format = "<span foreground='${green}'> </span> {usage}%";
       format-alt = "<span foreground='${green}'> </span> {avg_frequency} GHz";
@@ -98,6 +102,16 @@ in
     clock = {
       format = "{:%a %b %d  %I:%M %p}";
       tooltip-format = "{:%A, %B %d, %Y  %I:%M:%S %p}";
+    };
+    "clock#bkk" = {
+      format = "BKK {:%I:%M %p}";
+      tooltip-format = "Bangkok: {:%A, %B %d, %Y  %I:%M:%S %p}";
+      timezone = "Asia/Bangkok";
+    };
+    "clock#cairo" = {
+      format = "CAI {:%I:%M %p}";
+      tooltip-format = "Cairo: {:%A, %B %d, %Y  %I:%M:%S %p}";
+      timezone = "Africa/Cairo";
     };
     tray = {
       icon-size = 20;
@@ -173,10 +187,6 @@ in
       on-click-middle = "close";
       on-click-right = "minimize";
     };
-    clock = {
-      format = "{:%a %b %d  %I:%M %p}";
-      tooltip-format = "{:%A, %B %d, %Y  %I:%M:%S %p}";
-    };
     tray = {
       icon-size = 20;
       spacing = 8;
@@ -236,9 +246,15 @@ in
     }
 
     #clock {
-      color: ${text_color};
+      color: ${purple};
       margin-top: 2px;
       margin-right: 20px;
+      padding-left: 50px;
+    }
+
+    #clock.bkk, #clock.cairo {
+      color: ${text_color};
+      padding-left: 0px;
     }
 
     #tray {
