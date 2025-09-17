@@ -19,7 +19,6 @@
 
   home = {
     packages = with pkgs; [
-      (callPackage ./ib-tws.nix {})
       zed-editor-fhs
       neofetch
       cups-brother-hll2340dw

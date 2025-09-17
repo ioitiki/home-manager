@@ -152,7 +152,7 @@ in
   # Use the built-in Home Manager module for programs.rofi
   programs.rofi = {
     enable = true;
-    package = pkgs.rofi-wayland;
+    package = pkgs.rofi;
   };
 
   # Manage config and theme files declaratively
