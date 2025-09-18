@@ -4,6 +4,7 @@
   imports = [
     ./zsh.nix
     ./modules
+    ./redis.nix
   ];
 
   home.username = "andy";
@@ -19,6 +20,7 @@
 
   home = {
     packages = with pkgs; [
+      obs-studio
       zed-editor-fhs
       neofetch
       cups-brother-hll2340dw
