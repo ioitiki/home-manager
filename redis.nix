@@ -1,36 +1,45 @@
 { pkgs, lib, config, ... }:
 
 let
-  # Redis configuration
   redisPort = 6379;
-  redisDataDir = "${config.home.homeDirectory}/.local/share/redis";
-  redisLogDir = "${config.home.homeDirectory}/.local/share/redis/logs";
-  redisPidFile = "${config.home.homeDirectory}/.local/share/redis/redis.pid";
+  redisDataDir = "${config.home.homeDirectory}/.local/share/redis-docker";
   
-  # ACL configuration
-  redisAcl = pkgs.writeText "redis.acl" ''
-    user default off
-    user andy on >passw0rd ~* &* +@all
+  # Docker compose file for Redis with RedisJSON
+  dockerComposeFile = pkgs.writeText "docker-compose.yml" ''
+    services:
+      redis:
+        image: redis/redis-stack-server:latest
+        container_name: redis-rejson
+        ports:
+          - "${toString redisPort}:6379"
+        volumes:
+          - ${redisDataDir}/data:/data
+        environment:
+          - REDIS_ARGS=--requirepass passw0rd
+        restart: unless-stopped
+        healthcheck:
+          test: ["CMD", "redis-cli", "--raw", "incr", "ping"]
+          interval: 1s
+          timeout: 3s
+          retries: 5
   '';
 
-  # Redis configuration - using only built-in features
+  # Redis configuration file for Docker
   redisConf = pkgs.writeText "redis.conf" ''
     # Network
-    bind 127.0.0.1
-    port ${toString redisPort}
+    bind 0.0.0.0
+    port 6379
     protected-mode yes
     tcp-keepalive 300
     timeout 0
 
     # General
     daemonize no
-    supervised no
-    pidfile ${redisPidFile}
     loglevel notice
-    logfile ${redisLogDir}/redis.log
+    logfile ""
 
     # Persistence
-    dir ${redisDataDir}
+    dir /data
     save 900 1
     save 300 10
     save 60 10000
@@ -45,100 +54,65 @@ let
     maxmemory-policy allkeys-lru
 
     # Security
-    aclfile ${redisAcl}
     requirepass passw0rd
 
-    # Enable all built-in data structures
-    # Hash max entries optimizations
-    hash-max-ziplist-entries 512
-    hash-max-ziplist-value 64
-    
-    # List optimizations
-    list-max-ziplist-size -2
-    list-compress-depth 0
-    
-    # Set optimizations
-    set-max-intset-entries 512
-    
-    # Sorted set optimizations
-    zset-max-ziplist-entries 128
-    zset-max-ziplist-value 64
-    
-    # HyperLogLog optimizations
-    hll-sparse-max-bytes 3000
+    # RedisJSON is built into redis-stack-server image
   '';
 
 in {
-  # Install Redis package (uses pre-built binary from nixpkgs)
+  # Install required packages
   home.packages = with pkgs; [
-    redis
-    # Optional: Redis tools
-    # redis-commander  # Web UI for Redis (if available)
+    redis # For redis-cli
+    docker-compose
   ];
 
-  # Enable systemd user service linger to start services on boot
-  # This allows user services to start without logging in
+  # Enable systemd user service linger
   home.activation.enableLinger = lib.hm.dag.entryAfter ["writeBoundary"] ''
     ${pkgs.systemd}/bin/loginctl enable-linger $(whoami)
   '';
 
-  # Create necessary directories
-  home.activation.redisSetup = lib.hm.dag.entryAfter ["writeBoundary"] ''
-    mkdir -p ${redisDataDir}
-    mkdir -p ${redisLogDir}
+  # Create necessary directories and files
+  home.activation.redisDockerSetup = lib.hm.dag.entryAfter ["writeBoundary"] ''
+    mkdir -p ${redisDataDir}/data
+    mkdir -p ${redisDataDir}/conf
+    
+    # Copy configuration file
+    cp ${redisConf} ${redisDataDir}/conf/redis.conf
+    
+    # Copy docker-compose file
+    cp ${dockerComposeFile} ${redisDataDir}/docker-compose.yml
     
     # Set proper permissions
     chmod 700 ${redisDataDir}
-    chmod 700 ${redisLogDir}
-    
-    # Create initial ACL file if it doesn't exist
-    if [ ! -f ${redisDataDir}/redis.acl ]; then
-      cp ${redisAcl} ${redisDataDir}/redis.acl
-      chmod 600 ${redisDataDir}/redis.acl
-    fi
+    chmod 644 ${redisDataDir}/conf/redis.conf
+    chmod 644 ${redisDataDir}/docker-compose.yml
   '';
 
-  # Systemd user service for Redis
+  # Systemd user service for Redis using Docker
   systemd.user.services.redis = {
     Unit = {
-      Description = "Redis Server";
+      Description = "Redis Server with RedisJSON (Docker)";
       After = [ "default.target" ];
+      Requires = [ "docker.service" ];
     };
 
     Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.redis}/bin/redis-server ${redisConf}";
-      ExecReload = "${pkgs.coreutils}/bin/kill -USR2 $MAINPID";
+      Type = "oneshot";
+      RemainAfterExit = true;
+      WorkingDirectory = redisDataDir;
+      ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
+      ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
+      ExecReload = "${pkgs.docker-compose}/bin/docker-compose restart";
       Restart = "on-failure";
-      RestartSec = "5s";
-      TimeoutStopSec = "10s";
+      RestartSec = "10s";
+      TimeoutStartSec = "60s";
+      TimeoutStopSec = "30s";
       
       # Environment
       Environment = [
         "HOME=${config.home.homeDirectory}"
+        "PATH=${lib.makeBinPath [ pkgs.docker pkgs.docker-compose ]}"
       ];
-      
-      # Hardening
-      NoNewPrivileges = true;
-      PrivateTmp = true;
-      ProtectSystem = "strict";
-      ProtectHome = "read-only";
-      ReadWritePaths = [ 
-        redisDataDir 
-        redisLogDir 
-        "${config.home.homeDirectory}/.local/share/redis"
-      ];
-      
-      # Additional hardening
-      ProtectKernelTunables = true;
-      ProtectKernelModules = true;
-      ProtectControlGroups = true;
-      RestrictNamespaces = true;
-      LockPersonality = true;
-      MemoryDenyWriteExecute = false; # Redis needs this for some operations
-      RestrictRealtime = true;
-      RestrictSUIDSGID = true;
-      PrivateDevices = true;
     };
 
     Install = {
@@ -146,7 +120,7 @@ in {
     };
   };
 
-  # Convenience script to interact with Redis
+  # Convenience scripts
   home.file.".local/bin/redis-local" = {
     executable = true;
     text = ''
@@ -155,134 +129,62 @@ in {
     '';
   };
 
-  # Redis status and monitoring script
   home.file.".local/bin/redis-status" = {
     executable = true;
     text = ''
       #!/usr/bin/env bash
       
-      echo "=== Redis System Status ==="
-      systemctl --user status redis --no-pager
+      echo "=== Docker Container Status ==="
+      cd ${redisDataDir}
+      ${pkgs.docker-compose}/bin/docker-compose ps
       
       echo -e "\n=== Redis Server Info ==="
       ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd info server 2>/dev/null || echo "Redis not responding"
       
-      echo -e "\n=== Redis Memory Info ==="
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd info memory 2>/dev/null || echo "Redis not responding"
-      
-      echo -e "\n=== Redis Stats ==="
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd info stats 2>/dev/null || echo "Redis not responding"
-      
-      echo -e "\n=== Connected Clients ==="
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd client list 2>/dev/null || echo "Redis not responding"
+      echo -e "\n=== Loaded Modules ==="
+      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd MODULE LIST 2>/dev/null || echo "Redis not responding"
     '';
   };
 
-  # Redis benchmark script
-  home.file.".local/bin/redis-benchmark-local" = {
+  home.file.".local/bin/redis-test-json" = {
     executable = true;
     text = ''
       #!/usr/bin/env bash
-      echo "Running Redis benchmark on local instance..."
-      ${pkgs.redis}/bin/redis-benchmark -p ${toString redisPort} -a passw0rd "$@"
+      echo "Testing RedisJSON functionality..."
+      
+      echo "1. Checking loaded modules:"
+      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd MODULE LIST
+      
+      echo -e "\n2. Setting JSON data:"
+      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd JSON.SET test:user $ '{"name":"Andy","role":"CTO","skills":["trading","kubernetes","nixos"]}'
+      
+      echo -e "\n3. Getting JSON data:"
+      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd JSON.GET test:user
+      
+      echo -e "\n4. Getting specific path:"
+      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd JSON.GET test:user $.name
+      
+      echo -e "\n5. Getting array elements:"
+      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd JSON.GET test:user $.skills[0]
     '';
   };
 
-  # Redis backup script
-  home.file.".local/bin/redis-backup" = {
+  home.file.".local/bin/redis-docker-logs" = {
     executable = true;
     text = ''
       #!/usr/bin/env bash
-      
-      BACKUP_DIR="${config.home.homeDirectory}/.local/share/redis/backups"
-      TIMESTAMP=$(date +%Y%m%d_%H%M%S)
-      
-      mkdir -p "$BACKUP_DIR"
-      
-      echo "Creating Redis backup..."
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd BGSAVE
-      
-      # Wait for background save to complete
-      while [ "$(${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd LASTSAVE)" = "$(${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd LASTSAVE)" ]; do
-        sleep 1
-      done
-      
-      # Copy the dump file
-      if [ -f "${redisDataDir}/dump.rdb" ]; then
-        cp "${redisDataDir}/dump.rdb" "$BACKUP_DIR/dump_$TIMESTAMP.rdb"
-        echo "Backup created: $BACKUP_DIR/dump_$TIMESTAMP.rdb"
-        
-        # Keep only last 10 backups
-        ls -t "$BACKUP_DIR"/dump_*.rdb | tail -n +11 | xargs -r rm
-      else
-        echo "Error: dump.rdb not found"
-        exit 1
-      fi
+      cd ${redisDataDir}
+      ${pkgs.docker-compose}/bin/docker-compose logs -f redis
     '';
   };
 
-  # Redis restore script
-  home.file.".local/bin/redis-restore" = {
+  home.file.".local/bin/redis-docker-restart" = {
     executable = true;
     text = ''
       #!/usr/bin/env bash
-      
-      if [ $# -ne 1 ]; then
-        echo "Usage: $0 <backup_file>"
-        echo "Available backups:"
-        ls -la "${config.home.homeDirectory}/.local/share/redis/backups/"
-        exit 1
-      fi
-      
-      BACKUP_FILE="$1"
-      
-      if [ ! -f "$BACKUP_FILE" ]; then
-        echo "Error: Backup file not found: $BACKUP_FILE"
-        exit 1
-      fi
-      
-      echo "Stopping Redis..."
-      systemctl --user stop redis
-      
-      echo "Restoring from backup..."
-      cp "$BACKUP_FILE" "${redisDataDir}/dump.rdb"
-      
-      echo "Starting Redis..."
-      systemctl --user start redis
-      
-      echo "Restore complete"
-    '';
-  };
-
-  # Development helper - Redis test data loader
-  home.file.".local/bin/redis-load-test-data" = {
-    executable = true;
-    text = ''
-      #!/usr/bin/env bash
-      
-      echo "Loading test data into Redis..."
-      
-      # Sample key-value pairs
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd SET "user:1000:name" "Andy"
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd SET "user:1000:email" "andy@example.com"
-      
-      # Hash example
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd HMSET "user:1001" name "John" email "john@example.com" age 30
-      
-      # List example
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd LPUSH "tasks" "Deploy to production" "Update documentation" "Review pull request"
-      
-      # Set example
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd SADD "tags" "redis" "database" "cache" "nosql"
-      
-      # Sorted set example
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd ZADD "leaderboard" 100 "player1" 85 "player2" 95 "player3"
-      
-      # Set expiration
-      ${pkgs.redis}/bin/redis-cli -p ${toString redisPort} -a passw0rd SET "temp:session:abc123" "session_data" EX 3600
-      
-      echo "Test data loaded successfully"
-      echo "Try: redis-local KEYS '*' to see all keys"
+      cd ${redisDataDir}
+      ${pkgs.docker-compose}/bin/docker-compose restart redis
+      echo "Redis container restarted"
     '';
   };
 }
