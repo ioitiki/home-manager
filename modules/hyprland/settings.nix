@@ -23,6 +23,10 @@
         shadow.enabled = false;
       };
 
+      cursor = {
+        inactive_timeout = 1;
+      };
+
       animations = {
         enabled = true;
 
@@ -204,8 +208,8 @@
       ];
 
       windowrulev2 = [
-        "workspace special:slack silent, class:^(Slack)$"
-        "workspace special:slack silent, class:^(slack)$"
+        # "workspace special:slack silent, class:^(Slack)$"
+        # "workspace special:slack silent, class:^(slack)$"
         "workspace special:rambox silent, class:^(Rambox)$"
         "workspace special:rambox silent, class:^(rambox)$"
         "workspace special:dbeaver silent, class:^(DBeaver)$"

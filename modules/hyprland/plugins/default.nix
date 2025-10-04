@@ -4,5 +4,6 @@
     # ./hyprtasking.nix
     ./hy3.nix
     ./hyprbars.nix
+    # ./hyprspace.nix
   ];
 }

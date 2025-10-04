@@ -47,6 +47,7 @@
       hmsb = "home-manager switch --flake .#andy -b backup";
       nshell = "nix-shell -p";
       # git
+      "ga." = "ga .";
       spp = "git stash && git pull && git stash pop";
       icm = "git add -A && git commit -m 'ic' && git push origin main";
       gcm = "git commit -m";

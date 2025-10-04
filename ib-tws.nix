@@ -104,5 +104,4 @@ let
       export PATH="$JAVA_HOME/bin:$PATH"
     '';
   };
-  
 in twsFHS
