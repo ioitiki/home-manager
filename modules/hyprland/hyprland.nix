@@ -1,14 +1,17 @@
 { pkgs, inputs, ... }:
 
+let
+  cliphist-rofi-img = import ./cliphist-rofi-img.nix { inherit pkgs; };
+in
 {
   # User-level packages used with Hyprland
   home.packages = with pkgs; [
     hyprpaper
     xfce.thunar
-    nwg-clipman
     cliphist
     wl-clipboard
     hyprshot
+    cliphist-rofi-img
 
     # Dark theme support for various apps
     adwaita-qt

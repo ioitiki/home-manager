@@ -121,7 +121,7 @@
         "ALT, TAB, exec, $windowMenu"
         "ALT, UP, exec, $windowMenu"
         "CTRL SHIFT, 4, exec, $screenShotRegion"
-        "$mainMod, V, exec, nwg-clipman"
+        "$mainMod, V, exec, rofi -modi clipboard:cliphist-rofi-img -show clipboard -show-icons"
         "$mainMod SHIFT, W, exec, hyprctl dispatch killactive"
         "$mainMod, X, exec, $powerMenu"
         # "$mainMod, P, pseudo, "  # Not needed with hy3
