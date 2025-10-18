@@ -83,6 +83,8 @@
 
       nhash = "getHash";
 
+      cadd = "clipadd";
+
       # cursor = "nohup /run/current-system/sw/bin/cursor > /dev/null 2>&1 &";
     };
 
@@ -117,6 +119,10 @@
 
       getHash() {
         nix hash to-sri --type sha256 $(nix-prefetch-url --type sha256 $1)
+      }
+
+      clipadd() {
+        echo -n "$1" | wl-copy && echo -n "$1" | cliphist store
       }
     '';
   };

@@ -20,6 +20,7 @@
 
   home = {
     packages = with pkgs; [
+      buf
       obs-studio
       zed-editor-fhs
       neofetch

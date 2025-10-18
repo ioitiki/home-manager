@@ -1,8 +1,5 @@
 { pkgs, inputs, ... }:
 
-let
-  cliphist-rofi-img = import ./cliphist-rofi-img.nix { inherit pkgs; };
-in
 {
   # User-level packages used with Hyprland
   home.packages = with pkgs; [
@@ -11,12 +8,17 @@ in
     cliphist
     wl-clipboard
     hyprshot
-    cliphist-rofi-img
 
     # Dark theme support for various apps
     adwaita-qt
     adwaita-qt6
   ];
+
+  # Enable GNOME Keyring for secret storage (needed by 1Password extension)
+  services.gnome-keyring = {
+    enable = true;
+    components = [ "secrets" ];
+  };
 
   services.mako = {
     enable = true;
