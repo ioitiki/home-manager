@@ -15,6 +15,13 @@
         "wl-paste --type text --watch cliphist store"
         "wl-paste --type image --watch cliphist store"
         "hypridle"
+        "sleep 0.25; slack"
+        # Launch three terminals with unique titles for manual placement
+        "sleep 1; alacritty --title term-left"
+        "sleep 1.1; alacritty --title term-middle"
+        "sleep 1.2; alacritty --title term-right"
+        # Show the special workspace containing the terminals
+        "sleep 1.3; hyprctl dispatch togglespecialworkspace alacritty"
       ];
 
       decoration = {
@@ -208,14 +215,28 @@
       ];
 
       windowrulev2 = [
-        # "workspace special:slack silent, class:^(Slack)$"
-        # "workspace special:slack silent, class:^(slack)$"
+        "workspace special:slack silent, class:^(Slack)$"
+        "workspace special:slack silent, class:^(slack)$"
+        # Slack: sized and centered
+        "size 1884 1016, class:^(Slack)$"
+        "size 1884 1016, class:^(slack)$"
+        "center, class:^(Slack)$"
+        "center, class:^(slack)$"
         "workspace special:rambox silent, class:^(Rambox)$"
         "workspace special:rambox silent, class:^(rambox)$"
         "workspace special:dbeaver silent, class:^(DBeaver)$"
         "workspace special:dbeaver silent, class:^(dbeaver)$"
         "workspace special:alacritty silent, class:^(Alacritty)$"
         "workspace special:alacritty silent, class:^(alacritty)$"
+        # Manual placement for three terminal columns on 2560x1440 monitor
+        # Even 15px outer/inner gaps, centered in the top third (y≈80), height 1200
+        # Widths sum to 2500 (2560 - 4*15): 833, 833, 834
+        "size 833 1200, class:^(Alacritty)$, title:^(term-left)$"
+        "move 15 80, class:^(Alacritty)$, title:^(term-left)$"
+        "size 833 1200, class:^(Alacritty)$, title:^(term-middle)$"
+        "move 863 80, class:^(Alacritty)$, title:^(term-middle)$"
+        "size 834 1200, class:^(Alacritty)$, title:^(term-right)$"
+        "move 1711 80, class:^(Alacritty)$, title:^(term-right)$"
         "bordercolor rgba(00ff00ff), fullscreen:1" # Green border when in fullscreen/mono mode
         # "size 95% 95%, fullscreen:1" # Make fullscreen window slightly smaller to show border
         # "center, fullscreen:1" # Center the fullscreen window
@@ -234,7 +255,15 @@
 
       workspace = [
         "1, monitor:DP-3"
+        "2, monitor:DP-3"
+        "3, monitor:DP-3"
+        "4, monitor:DP-3"
+        "5, monitor:DP-3"
+        "6, monitor:DP-3"
         "7, monitor:HDMI-A-1"
+        "8, monitor:HDMI-A-1"
+        "9, monitor:HDMI-A-1"
+        "10, monitor:HDMI-A-1"
       ];
 
     };
