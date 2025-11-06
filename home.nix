@@ -5,6 +5,7 @@
     ./zsh.nix
     ./modules
     ./redis.nix
+    ./nfs-mount.nix
   ];
 
   home.username = "andy";
@@ -20,6 +21,8 @@
 
   home = {
     packages = with pkgs; [
+      zenity
+      gnome-calculator
       buf
       obs-studio
       zed-editor-fhs

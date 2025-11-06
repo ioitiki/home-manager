@@ -60,6 +60,8 @@ in
     ];
     modules-center = [ ];
     modules-right = [
+      "custom/calculator"
+      "custom/calendar"
       "clock#bkk"
       "clock#cairo"
       "clock"
@@ -98,6 +100,16 @@ in
       on-click = "activate";
       on-click-middle = "close";
       on-click-right = "minimize";
+    };
+    "custom/calculator" = {
+      format = "󰃬";
+      tooltip = false;
+      on-click = "hyprctl dispatch exec 'gnome-calculator'";
+    };
+    "custom/calendar" = {
+      format = "";
+      tooltip = false;
+      on-click = "hyprctl dispatch exec 'zenity --calendar'";
     };
     clock = {
       format = "{:%a %b %d  %I:%M %p}";
@@ -213,6 +225,14 @@ in
       font-weight: ${font_weight};
       opacity: ${opacity};
       font-size: ${font_size};
+    }
+
+    #custom-calculator, #custom-calendar {
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-right: 10px;
+      color: ${text_color};
+      font-size: 20px;
     }
 
     window#waybar {

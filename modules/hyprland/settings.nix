@@ -162,6 +162,8 @@
         "$mainMod SHIFT, D, movetoworkspace, special:dbeaver"
         "$mainMod, T, togglespecialworkspace, alacritty"
         "$mainMod SHIFT, T, movetoworkspace, special:alacritty"
+        "$mainMod, minus, togglespecialworkspace, tos"
+        "$mainMod SHIFT, minus, movetoworkspace, special:tos"
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
       ];
@@ -228,6 +230,11 @@
         "workspace special:dbeaver silent, class:^(dbeaver)$"
         "workspace special:alacritty silent, class:^(Alacritty)$"
         "workspace special:alacritty silent, class:^(alacritty)$"
+        # Think or Swim special workspace rules
+        "workspace special:tos silent, class:^(java-lang-Thread)$"
+        "size 2026 1224, class:^(java-lang-Thread)$"
+        # "float, class:^(java-lang-Thread)$"
+        "center, class:^(java-lang-Thread)$"
         # Manual placement for three terminal columns on 2560x1440 monitor
         # Even 15px outer/inner gaps, centered in the top third (y≈80), height 1200
         # Widths sum to 2500 (2560 - 4*15): 833, 833, 834
