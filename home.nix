@@ -33,11 +33,12 @@
       xarchiver
       vivaldi
       vivaldi-ffmpeg-codecs
-      _1password
+      _1password-cli
       _1password-gui
       pavucontrol
       pamixer
-      # Add TypeScript Language Server
+      # Add Language Servers
+      yaml-language-server
       nodePackages.typescript-language-server
       nodePackages.typescript
       # Interactive Brokers TWS
