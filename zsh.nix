@@ -11,26 +11,28 @@
       lst = "ls -lt --time=ctime";
       # zsh
       rezsh = "source ~/.zshrc";
-      zshrc = "cursor ~/.zshrc";
-      # cursor
-      code = "cursor";
-      cod = "cursor";
-      s = "cursor";
-      scripts = "cursor ~/nft/scripts";
-      charts = "cursor ~/nft/charts";
-      ".ssh" = "cursor ~/.ssh";
-      chainstarters-terraform = "cursor ~/nft/chainstarters-terraform";
-      marketplace-graphql = "cursor ~/nft/nft-marketplace-graphql";
-      marketplace-contracts = "cursor ~/nft/nft-marketplace-contracts";
-      marketplace-react = "cursor ~/nft/nft-marketplace-react";
-      marketplace-docs = "cursor ~/nft/nft-marketplace-docs";
-      dashboard-graphql = "cursor ~/nft/nft-dashboard-graphql";
-      dashboard-react = "cursor ~/nft/nft-dashboard-react";
-      monorepo = "cursor ~/nft/monorepo";
-      rail = "cursor ~/coding/railbird";
-      soad = "cursor ~/system-of-a-dow/soad";
-      verified-fans-graphql = "cursor ~/verified-fans/verified-fans-graphql";
-      verified-fans-react = "cursor ~/verified-fans/verified-fans-react";
+      zshrc = "zeditor ~/.zshrc";
+      # zeditor
+      code = "zeditor";
+      cod = "zeditor";
+      s = "zeditor";
+      scripts = "zeditor ~/nft/scripts";
+      charts = "zeditor ~/nft/charts";
+      ".ssh" = "zeditor ~/.ssh";
+      mfa-trading = "zeditor ~/trading/mfa-trading";
+      beelines = "zeditor ~/beelines/backend-monorepo";
+      chainstarters-terraform = "zeditor ~/nft/chainstarters-terraform";
+      marketplace-graphql = "zeditor ~/nft/nft-marketplace-graphql";
+      marketplace-contracts = "zeditor ~/nft/nft-marketplace-contracts";
+      marketplace-react = "zeditor ~/nft/nft-marketplace-react";
+      marketplace-docs = "zeditor ~/nft/nft-marketplace-docs";
+      dashboard-graphql = "zeditor ~/nft/nft-dashboard-graphql";
+      dashboard-react = "zeditor ~/nft/nft-dashboard-react";
+      monorepo = "zeditor ~/nft/monorepo";
+      rail = "zeditor ~/coding/railbird";
+      soad = "zeditor ~/system-of-a-dow/soad";
+      verified-fans-graphql = "zeditor ~/verified-fans/verified-fans-graphql";
+      verified-fans-react = "zeditor ~/verified-fans/verified-fans-react";
       # k8s
       ke = "kubectl exec -it";
       knreact = "kubens $(kubens -c)-react";
@@ -74,9 +76,9 @@
       ".." = "cd ..";
       "myip" = "curl -4 icanhazip.com";
 
-      db_ip_whitelist_bee="doctl db firewalls append bf2de5ef-4084-48d9-a97b-096077dfb482 --rule ip_addr:\$(curl ifconfig.io -4)";
-      redis_ip_whitelist_bee="doctl db firewalls append 9559078b-d046-4b3a-b355-bab8d28e77de --rule ip_addr:\$(curl ifconfig.io -4)";
-      dbip="db_ip_whitelist_bee && redis_ip_whitelist_bee";
+      db_ip_whitelist_bee = "doctl db firewalls append bf2de5ef-4084-48d9-a97b-096077dfb482 --rule ip_addr:\$(curl ifconfig.io -4)";
+      redis_ip_whitelist_bee = "doctl db firewalls append 9559078b-d046-4b3a-b355-bab8d28e77de --rule ip_addr:\$(curl ifconfig.io -4)";
+      dbip = "db_ip_whitelist_bee && redis_ip_whitelist_bee";
 
       bd = "base64d";
       be = "base64e";
@@ -104,7 +106,7 @@
 
     envExtra = ''
       export NPM_AUTH_TOKEN=MjA5ODUyZWFlNDI2OTAyNWFjOWVhZjI0NTBjZjk0NTc6Y2JkNzdiMmIwOWIzNmZhMDc2OTgzM2U1MjEwZDAxOWI2OTRmNDk0ZTRlNmU5ZTllNTkzN2ZjMmFjODNjM2IzYmNj
-      export KUBE_EDITOR="cursor -w"
+      export KUBE_EDITOR="zeditor --wait"
     '';
 
     initContent = ''
@@ -112,7 +114,7 @@
       base64d() {
         echo "$1" | base64 -d
       }
-      
+
       base64e() {
         printf "$1" | base64 -w 0; echo
       }

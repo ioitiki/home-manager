@@ -1,11 +1,10 @@
-{ pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
     ./zsh.nix
     ./modules
     ./redis.nix
-    ./nfs-mount.nix
   ];
 
   home.username = "andy";
