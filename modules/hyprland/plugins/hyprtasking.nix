@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }:
 {
   wayland.windowManager.hyprland = {
-    plugins = [ inputs.hyprtasking.packages.${pkgs.system}.hyprtasking ];
+    plugins = [ inputs.hyprtasking.packages.${pkgs.stdenv.hostPlatform.system}.hyprtasking ];
 
     settings = {
       plugin.hyprtasking = {

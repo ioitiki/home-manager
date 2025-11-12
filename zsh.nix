@@ -20,7 +20,7 @@
       charts = "zeditor ~/nft/charts";
       ".ssh" = "zeditor ~/.ssh";
       mfa-trading = "zeditor ~/trading/mfa-trading";
-      beelines = "zeditor ~/beelines/backend-monorepo";
+      beelines = "zeditor ~/bee/backend-monorepo";
       chainstarters-terraform = "zeditor ~/nft/chainstarters-terraform";
       marketplace-graphql = "zeditor ~/nft/nft-marketplace-graphql";
       marketplace-contracts = "zeditor ~/nft/nft-marketplace-contracts";

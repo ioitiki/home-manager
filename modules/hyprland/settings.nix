@@ -5,6 +5,7 @@
       "$mainMod" = "SUPER";
       "$terminal" = "alacritty";
       "$fileManager" = "thunar";
+      "$editor" = "zeditor";
       "$menu" = "rofi -show combi -combi-modes \"window,drun\" -modes combi";
       "$windowMenu" = "rofi -show window";
       "$powerMenu" = "/home/andy/.config/rofi/power-menu.sh";
@@ -119,9 +120,12 @@
         "$mainMod, Q, exec, $terminal"
         "$mainMod, C, killactive,"
         "$mainMod CTRL, M, exit,"
-        "$mainMod, E, exec, $fileManager"
+        "$mainMod, O, exec, $fileManager"
         "$mainMod, F, togglefloating,"
         "$mainMod, M, fullscreen, 0" # Toggle fullscreen (mono layout)
+        "$mainMod CTRL, E, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"mfa-trading\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/trading/mfa-trading; fi'"
+        "$mainMod CTRL, B, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"backend-monorepo\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/bee/backend-monorepo; fi'"
+        "$mainMod CTRL, H, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"home-manager\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/.config/home-manager; fi'"
         # Span active window across both monitors (assumes 2× 2560x1440 at 0x0 and 2560x0)
         # Adjust numbers if your monitor layout changes
         "$mainMod, B, exec, sh -c \"if hyprctl getoption plugin:hyprbars:enabled | grep -q 'int: 1'; then hyprctl keyword plugin:hyprbars:enabled 0; else hyprctl keyword plugin:hyprbars:enabled 1; fi\""
@@ -249,7 +253,7 @@
         # "size 95% 95%, fullscreen:1" # Make fullscreen window slightly smaller to show border
         # "center, fullscreen:1" # Center the fullscreen window
 
-         # Add these new Cursor rules:
+        # Add these new Cursor rules:
         "center, class:^(Cursor)$, floating:1"
         "center, class:^(Cursor)$, title:^(Are you sure.*)"
         "size 400 200, class:^(Cursor)$, title:^(Are you sure.*)"

@@ -1,7 +1,7 @@
 { inputs, pkgs, ... }:
 {
   wayland.windowManager.hyprland = {
-    plugins = [ inputs.Hyprspace.packages.${pkgs.system}.Hyprspace ];
+    plugins = [ inputs.Hyprspace.packages.${pkgs.stdenv.hostPlatform.system}.Hyprspace ];
 
     # settings = {
     #   # Set hy3 as the default layout
