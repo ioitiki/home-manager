@@ -20,6 +20,9 @@
 
   home = {
     packages = with pkgs; [
+      ripgrep
+      lazydocker
+      claude-code
       zenity
       gnome-calculator
       buf

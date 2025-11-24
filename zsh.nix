@@ -7,6 +7,10 @@
     syntaxHighlighting.enable = true;
 
     shellAliases = {
+      # rust
+      cg = "cargo";
+      cgr = "cargo run";
+      c = "claude";
       # system
       lst = "ls -lt --time=ctime";
       # zsh
@@ -107,6 +111,7 @@
     envExtra = ''
       export NPM_AUTH_TOKEN=MjA5ODUyZWFlNDI2OTAyNWFjOWVhZjI0NTBjZjk0NTc6Y2JkNzdiMmIwOWIzNmZhMDc2OTgzM2U1MjEwZDAxOWI2OTRmNDk0ZTRlNmU5ZTllNTkzN2ZjMmFjODNjM2IzYmNj
       export KUBE_EDITOR="zeditor --wait"
+      export EDITOR="zeditor --wait"
     '';
 
     initContent = ''

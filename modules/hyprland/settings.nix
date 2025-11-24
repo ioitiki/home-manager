@@ -117,8 +117,7 @@
       ];
 
       bind = [
-        "$mainMod, Q, exec, $terminal"
-        "$mainMod, C, killactive,"
+        "$mainMod, Q, killactive"
         "$mainMod CTRL, M, exit,"
         "$mainMod, O, exec, $fileManager"
         "$mainMod, F, togglefloating,"
@@ -126,6 +125,8 @@
         "$mainMod CTRL, E, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"mfa-trading\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/trading/mfa-trading; fi'"
         "$mainMod CTRL, B, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"backend-monorepo\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/bee/backend-monorepo; fi'"
         "$mainMod CTRL, H, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"home-manager\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/.config/home-manager; fi'"
+        # Resize and position active window to custom dimensions (3953x1384 at 1160,44)
+        "$mainMod SHIFT, F, exec, hyprctl dispatch togglefloating active && sleep 0.1 && hyprctl dispatch movewindowpixel exact 1160 44,active && hyprctl dispatch resizewindowpixel exact 3953 1384,active"
         # Span active window across both monitors (assumes 2× 2560x1440 at 0x0 and 2560x0)
         # Adjust numbers if your monitor layout changes
         "$mainMod, B, exec, sh -c \"if hyprctl getoption plugin:hyprbars:enabled | grep -q 'int: 1'; then hyprctl keyword plugin:hyprbars:enabled 0; else hyprctl keyword plugin:hyprbars:enabled 1; fi\""
@@ -167,8 +168,6 @@
         "$mainMod SHIFT, D, movetoworkspace, special:dbeaver"
         "$mainMod, T, togglespecialworkspace, alacritty"
         "$mainMod SHIFT, T, movetoworkspace, special:alacritty"
-        "$mainMod, minus, togglespecialworkspace, tos"
-        "$mainMod SHIFT, minus, movetoworkspace, special:tos"
         "$mainMod, mouse_down, workspace, e+1"
         "$mainMod, mouse_up, workspace, e-1"
       ];
@@ -210,6 +209,7 @@
         "float,title:^(branchdialog)$"
         "float,title:^(Confirm to replace files)$"
         "float,title:^(File Operation Progress)$"
+        "float,title:^(Select what to share)$"
         "float,class:^(DBeaver)$"
         "float,class:^(dbeaver)$"
         "float,class:^(Slack)$"
@@ -233,13 +233,13 @@
         "workspace special:rambox silent, class:^(rambox)$"
         "workspace special:dbeaver silent, class:^(DBeaver)$"
         "workspace special:dbeaver silent, class:^(dbeaver)$"
+        # DBeaver: sized and centered
+        "size 1909 1068, class:^(DBeaver)$"
+        "size 1909 1068, class:^(dbeaver)$"
+        "center, class:^(DBeaver)$"
+        "center, class:^(dbeaver)$"
         "workspace special:alacritty silent, class:^(Alacritty)$"
         "workspace special:alacritty silent, class:^(alacritty)$"
-        # Think or Swim special workspace rules
-        "workspace special:tos silent, class:^(java-lang-Thread)$"
-        "size 2026 1224, class:^(java-lang-Thread)$"
-        # "float, class:^(java-lang-Thread)$"
-        "center, class:^(java-lang-Thread)$"
         # Manual placement for three terminal columns on 2560x1440 monitor
         # Even 15px outer/inner gaps, centered in the top third (y≈80), height 1200
         # Widths sum to 2500 (2560 - 4*15): 833, 833, 834
