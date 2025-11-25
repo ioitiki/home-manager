@@ -1,5 +1,18 @@
 { pkgs, ... }:
 
+let
+  claude-code = import ./claude-code/package.nix {
+    inherit (pkgs)
+      lib
+      stdenvNoCC
+      fetchurl
+      appimageTools
+      makeWrapper
+      writeScript
+      undmg
+      ;
+  };
+in
 {
   imports = [
     ./zsh.nix
