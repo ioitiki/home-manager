@@ -4,12 +4,10 @@ let
   claude-code = import ./claude-code/package.nix {
     inherit (pkgs)
       lib
-      stdenvNoCC
-      fetchurl
-      appimageTools
-      makeWrapper
-      writeScript
-      undmg
+      buildNpmPackage
+      fetchzip
+      writableTmpDirAsHomeHook
+      versionCheckHook
       ;
   };
 in
