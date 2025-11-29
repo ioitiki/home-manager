@@ -3,6 +3,8 @@ with lib;
 let
   defaultApps = {
     browser = [ "vivaldi-stable.desktop" ];
+    fileManager = [ "thunar.desktop" ];
+    pdf = [ "org.pwmt.zathura.desktop" ];
   };
 
   mimeMap = {
@@ -12,6 +14,13 @@ let
       "x-scheme-handler/http"
       "x-scheme-handler/https"
       "x-scheme-handler/unknown"
+    ];
+    fileManager = [
+      "inode/directory"
+      "x-scheme-handler/file"
+    ];
+    pdf = [
+      "application/pdf"
     ];
   };
 

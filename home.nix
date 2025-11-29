@@ -56,6 +56,7 @@ in
       yaml-language-server
       nodePackages.typescript-language-server
       nodePackages.typescript
+      zathura
       # Interactive Brokers TWS
       (callPackage ./ib-tws.nix { })
     ];

@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
   themeFile = ''
@@ -284,7 +284,7 @@ in
       choices="Shutdown\nReboot"
       selection=$(printf "%b" "$choices" | rofi -dmenu -i -p "Power")
 
-      case "${selection:-}" in
+      case "${"selection:-"}" in
         Shutdown)
           systemctl poweroff
           ;;
@@ -298,6 +298,3 @@ in
     '';
   };
 }
-
-
-
