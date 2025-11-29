@@ -20,7 +20,7 @@
     #   inputs.hyprland.follows = "hyprland";
     # };
 
-    inputs.hyprland-contrib = {
+    hyprland-contrib = {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
     };

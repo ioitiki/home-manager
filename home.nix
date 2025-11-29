@@ -57,10 +57,34 @@ in
       nodePackages.typescript-language-server
       nodePackages.typescript
       zathura
+      # Fonts
+      nerd-fonts.jetbrains-mono # or other nerd-fonts variants
+      # nerd-fonts.fira-code
+      noto-fonts
+      noto-fonts-color-emoji
+      font-awesome
+      fira-code
+      inter
       # Interactive Brokers TWS
       (callPackage ./ib-tws.nix { })
     ];
   };
+
+  fonts.fontconfig.enable = true;
+
+  # fonts.packages = with pkgs; [
+  #     noto-fonts
+  #     noto-fonts-cjk-sans
+  #     noto-fonts-color-emoji
+  #     liberation_ttf
+  #     fira-code
+  #     fira-code-symbols
+  #     mplus-outline-fonts.githubRelease
+  #     dina-font
+  #     proggyfonts
+  #     nerd-fonts.fira-code
+  #     font-awesome
+  #   ];
 
   programs.home-manager.enable = true;
 }
