@@ -30,6 +30,7 @@ in
   };
 
   home = {
+    enableNixpkgsReleaseCheck = false;
     packages = with pkgs; [
       ripgrep
       lazydocker
@@ -43,6 +44,7 @@ in
       cups-brother-hll2340dw
       resources
       lsof
+      libnotify
       xarchiver
       vivaldi
       vivaldi-ffmpeg-codecs

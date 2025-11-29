@@ -178,6 +178,102 @@ in
     }
   '';
 
+  # Emoji picker script (emojiget.py) - downloads and caches emoji data
+  home.file.".local/bin/emojiget.py" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env python3
+      import json
+      import os
+      import urllib.request
+      from pathlib import Path
+
+      CACHE_DIR = Path.home() / ".cache" / "emojiget"
+      EMOJI_JSON = CACHE_DIR / "emoji.json"
+      EMOJI_FILTERED = CACHE_DIR / "emoji_filtered.txt"
+      EMOJI_URL = "https://gist.githubusercontent.com/oliveratgithub/0bf11a9aff0d6da7b46f1490f86a71eb/raw/d8e4b78cfe66862cf3809443c1dba017f37b61db/emojis.json"
+
+      def download_emojis():
+          CACHE_DIR.mkdir(parents=True, exist_ok=True)
+          print(f"Downloading emoji data to {EMOJI_JSON}...")
+          urllib.request.urlretrieve(EMOJI_URL, EMOJI_JSON)
+
+      def filter_emojis():
+          with open(EMOJI_JSON, "r", encoding="utf-8") as f:
+              data = json.load(f)
+
+          lines = []
+          for item in data.get("emojis", []):
+              emoji = item.get("emoji", "")
+              name = item.get("name", "")
+              if emoji and name:
+                  lines.append(f"{emoji} {name}")
+
+          with open(EMOJI_FILTERED, "w", encoding="utf-8") as f:
+              f.write("\n".join(lines))
+
+      def main():
+          if not EMOJI_JSON.exists():
+              download_emojis()
+          if not EMOJI_FILTERED.exists():
+              filter_emojis()
+          print(EMOJI_FILTERED)
+
+      if __name__ == "__main__":
+          main()
+    '';
+  };
+
+  # Emoji picker script (emojipick) - main script that uses rofi
+  home.file.".local/bin/emojipick" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      set -euo pipefail
+
+      # Configuration
+      copy_to_clipboard=1
+      show_notification=1
+      favorites_file="$HOME/.myemojis"
+
+      # Get emoji data file path
+      emoji_file=$(python3 ~/.local/bin/emojiget.py)
+
+      # Build emoji list (favorites first if exists)
+      if [[ -f "$favorites_file" ]]; then
+          emoji_list=$(cat "$favorites_file" "$emoji_file")
+      else
+          emoji_list=$(cat "$emoji_file")
+      fi
+
+      # Show rofi menu and get selection
+      selection=$(echo "$emoji_list" | rofi -dmenu -i -p "Emoji" -theme-str 'window {width: 400px;}')
+
+      # Exit if nothing selected
+      [[ -z "$selection" ]] && exit 0
+
+      # Extract emoji (first field before space, or quoted content)
+      if [[ "$selection" == \"* ]]; then
+          emoji=$(echo "$selection" | sed 's/^"\([^"]*\)".*/\1/')
+      else
+          emoji=$(echo "$selection" | awk '{print $1}')
+      fi
+
+      # Copy to clipboard
+      if [[ "$copy_to_clipboard" -eq 1 ]]; then
+          echo -n "$emoji" | wl-copy
+      fi
+
+      # Show notification
+      if [[ "$show_notification" -eq 1 ]]; then
+          notify-send "Emoji Copied" "$emoji"
+      fi
+
+      # Output to stdout
+      echo "$emoji"
+    '';
+  };
+
   # Minimal power menu script for shutdown and reboot
   home.file.".config/rofi/power-menu.sh" = {
     executable = true;
