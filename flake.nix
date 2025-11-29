@@ -4,13 +4,13 @@
   inputs = {
     # Nixpkgs
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+
     # Home manager
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    
+
     hyprland = {
       url = "github:hyprwm/Hyprland/v0.50.0";
     };
@@ -19,6 +19,11 @@
     #   url = "github:KZDKM/Hyprspace";
     #   inputs.hyprland.follows = "hyprland";
     # };
+
+    inputs.hyprland-contrib = {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprtasking = {
       url = "github:raybbian/hyprtasking";
@@ -36,15 +41,16 @@
     };
   };
 
-  outputs = {
-    nixpkgs,
-    home-manager,
-    hyprland,
-    hyprtasking,
-    hy3,
-    hyprland-plugins,
-    ...
-  }@inputs:
+  outputs =
+    {
+      nixpkgs,
+      home-manager,
+      hyprland,
+      hyprtasking,
+      hy3,
+      hyprland-plugins,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs {
@@ -56,13 +62,13 @@
       packages.${system} = {
         ib-tws = pkgs.callPackage ./ib-tws.nix { };
       };
-      
+
       homeConfigurations."andy" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         # Specify your home configuration modules here, for example,
         # the path to your home.nix.
-        modules = [ 
+        modules = [
           ./home.nix
           hyprland.homeManagerModules.default
         ];

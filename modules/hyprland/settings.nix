@@ -9,7 +9,7 @@
       "$menu" = "rofi -show combi -combi-modes \"window,drun\" -modes combi";
       "$windowMenu" = "rofi -show window";
       "$powerMenu" = "/home/andy/.config/rofi/power-menu.sh";
-      "$screenShotRegion" = "hyprshot -m region --clipboard-only";
+      "$screenShotRegion" = "wayshot";
 
       exec-once = [
         "waybar & hyprpaper"

@@ -7,11 +7,13 @@
     xfce.thunar
     cliphist
     wl-clipboard
-    hyprshot
+    wayshot
 
     # Dark theme support for various apps
     adwaita-qt
     adwaita-qt6
+
+    inputs.hyprland-contrib.packages.${pkgs.system}.grimblast # or any other package
   ];
 
   # Enable GNOME Keyring for secret storage (needed by 1Password extension)
@@ -59,5 +61,14 @@
     enable = true;
     package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
     xwayland.enable = true;
+  };
+
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-luminous ];
+    config.common.default = [
+      "hyprland"
+      "luminous"
+    ];
   };
 }
