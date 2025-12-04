@@ -5,6 +5,7 @@ let
     browser = [ "vivaldi-stable.desktop" ];
     fileManager = [ "thunar.desktop" ];
     pdf = [ "org.pwmt.zathura.desktop" ];
+    figma = [ "figma-linux.desktop" ];
   };
 
   mimeMap = {
@@ -21,6 +22,9 @@ let
     ];
     pdf = [
       "application/pdf"
+    ];
+    figma = [
+      "x-scheme-handler/figma"
     ];
   };
 
@@ -39,6 +43,17 @@ in
   xdg.mimeApps.enable = true;
   xdg.mimeApps.associations.added = associations;
   xdg.mimeApps.defaultApplications = associations;
+
+  # Override figma-linux desktop entry to include URL scheme handler
+  xdg.desktopEntries.figma-linux = {
+    name = "Figma Linux";
+    comment = "Unofficial Figma desktop application for Linux";
+    exec = "figma-linux %U";
+    icon = "figma-linux";
+    terminal = false;
+    type = "Application";
+    mimeType = [ "x-scheme-handler/figma" ];
+  };
 }
 
 

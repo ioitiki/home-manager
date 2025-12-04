@@ -32,6 +32,7 @@ in
   home = {
     enableNixpkgsReleaseCheck = false;
     packages = with pkgs; [
+      figma-linux
       ripgrep
       lazydocker
       claude-code
@@ -52,6 +53,7 @@ in
       _1password-gui
       pavucontrol
       pamixer
+      solaar
       # Add Language Servers
       yaml-language-server
       nodePackages.typescript-language-server
@@ -60,6 +62,7 @@ in
       # Fonts
       nerd-fonts.jetbrains-mono # or other nerd-fonts variants
       # nerd-fonts.fira-code
+      hack-font
       noto-fonts
       noto-fonts-color-emoji
       font-awesome

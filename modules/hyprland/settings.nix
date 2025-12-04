@@ -126,7 +126,7 @@
         "$mainMod CTRL, B, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"backend-monorepo\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/bee/backend-monorepo; fi'"
         "$mainMod CTRL, H, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"home-manager\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/.config/home-manager; fi'"
         # Resize and position active window to custom dimensions (3953x1384 at 1160,44)
-        "$mainMod SHIFT, F, exec, hyprctl dispatch togglefloating active && sleep 0.1 && hyprctl dispatch movewindowpixel exact 1160 44,active && hyprctl dispatch resizewindowpixel exact 3953 1384,active"
+        "$mainMod SHIFT, F, exec, hyprctl dispatch togglefloating active && sleep 0.1 && hyprctl dispatch movewindowpixel exact 1056 44,active && hyprctl dispatch resizewindowpixel exact 4057 1381,active"
         # Span active window across both monitors (assumes 2× 2560x1440 at 0x0 and 2560x0)
         # Adjust numbers if your monitor layout changes
         "$mainMod, B, exec, sh -c \"if hyprctl getoption plugin:hyprbars:enabled | grep -q 'int: 1'; then hyprctl keyword plugin:hyprbars:enabled 0; else hyprctl keyword plugin:hyprbars:enabled 1; fi\""
