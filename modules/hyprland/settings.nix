@@ -122,7 +122,7 @@
         "$mainMod, Q, killactive"
         "$mainMod CTRL, M, exit,"
         "$mainMod, O, exec, $fileManager"
-        "$mainMod, F, togglefloating,"
+        "$mainMod, F, exec, hyprctl dispatch togglefloating active && sleep 0.1 && hyprctl dispatch resizewindowpixel exact 2169 1274,active && hyprctl dispatch centerwindow"
         "$mainMod, M, fullscreen, 0" # Toggle fullscreen (mono layout)
         "$mainMod CTRL, E, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"mfa-trading\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/trading/mfa-trading; fi'"
         "$mainMod CTRL, B, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"backend-monorepo\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/bee/backend-monorepo; fi'"

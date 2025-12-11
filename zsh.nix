@@ -11,6 +11,7 @@
       cg = "cargo";
       cgr = "cargo run";
       c = "claude";
+      claudeupdate = "~/.config/home-manager/claude-code/update.sh";
       # system
       lst = "ls -lt --time=ctime";
       # zsh
