@@ -116,7 +116,9 @@
         }
       ];
 
+      # Thumb button (mouse:278) enters thumbmod submap
       bind = [
+        ", mouse:278, submap, thumbmod"
         "$mainMod, Q, killactive"
         "$mainMod CTRL, M, exit,"
         "$mainMod, O, exec, $fileManager"
@@ -126,7 +128,7 @@
         "$mainMod CTRL, B, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"backend-monorepo\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/bee/backend-monorepo; fi'"
         "$mainMod CTRL, H, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"home-manager\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/.config/home-manager; fi'"
         # Resize and position active window to custom dimensions (3953x1384 at 1160,44)
-        "$mainMod SHIFT, F, exec, hyprctl dispatch togglefloating active && sleep 0.1 && hyprctl dispatch movewindowpixel exact 1056 44,active && hyprctl dispatch resizewindowpixel exact 4057 1381,active"
+        "$mainMod SHIFT, F, exec, hyprctl dispatch togglefloating active && sleep 0.1 && hyprctl dispatch movewindowpixel exact 911 42,active && hyprctl dispatch resizewindowpixel exact 4202 1384,active"
         # Span active window across both monitors (assumes 2× 2560x1440 at 0x0 and 2560x0)
         # Adjust numbers if your monitor layout changes
         "$mainMod, B, exec, sh -c \"if hyprctl getoption plugin:hyprbars:enabled | grep -q 'int: 1'; then hyprctl keyword plugin:hyprbars:enabled 0; else hyprctl keyword plugin:hyprbars:enabled 1; fi\""
@@ -280,5 +282,91 @@
       ];
 
     };
+
+    # Thumb button submap - acts like SUPER modifier
+    extraConfig = ''
+      submap = thumbmod
+
+      # Mirror main SUPER bindings (exit submap after action)
+      bind = , Q, killactive
+      bind = , Q, submap, reset
+      bind = , O, exec, thunar
+      bind = , O, submap, reset
+      bind = , F, togglefloating
+      bind = , F, submap, reset
+      bind = , M, fullscreen, 0
+      bind = , M, submap, reset
+      bind = , V, exec, rofi -modi clipboard:cliphist-rofi-img -show clipboard -show-icons
+      bind = , V, submap, reset
+      bind = , E, exec, ~/.local/bin/emojipick
+      bind = , E, submap, reset
+      bind = , X, exec, /home/andy/.config/rofi/power-menu.sh
+      bind = , X, submap, reset
+
+      # Special workspaces (exit after toggle)
+      bind = , T, togglespecialworkspace, alacritty
+      bind = , T, submap, reset
+      bind = , S, togglespecialworkspace, slack
+      bind = , S, submap, reset
+      bind = , R, togglespecialworkspace, rambox
+      bind = , R, submap, reset
+      bind = , D, togglespecialworkspace, dbeaver
+      bind = , D, submap, reset
+
+      # Workspaces (exit after switch)
+      bind = , 1, workspace, 1
+      bind = , 1, submap, reset
+      bind = , 2, workspace, 2
+      bind = , 2, submap, reset
+      bind = , 3, workspace, 3
+      bind = , 3, submap, reset
+      bind = , 4, workspace, 4
+      bind = , 4, submap, reset
+      bind = , 5, workspace, 5
+      bind = , 5, submap, reset
+      bind = , 6, workspace, 6
+      bind = , 6, submap, reset
+      bind = , 7, workspace, 7
+      bind = , 7, submap, reset
+      bind = , 8, workspace, 8
+      bind = , 8, submap, reset
+      bind = , 9, workspace, 9
+      bind = , 9, submap, reset
+      bind = , 0, workspace, 10
+      bind = , 0, submap, reset
+
+      # Move to workspace with SHIFT (exit after move)
+      bind = SHIFT, 1, movetoworkspace, 1
+      bind = SHIFT, 1, submap, reset
+      bind = SHIFT, 2, movetoworkspacesilent, 2
+      bind = SHIFT, 2, submap, reset
+      bind = SHIFT, 3, movetoworkspacesilent, 3
+      bind = SHIFT, 3, submap, reset
+      bind = SHIFT, 4, movetoworkspacesilent, 4
+      bind = SHIFT, 4, submap, reset
+      bind = SHIFT, 5, movetoworkspacesilent, 5
+      bind = SHIFT, 5, submap, reset
+      bind = SHIFT, 6, movetoworkspacesilent, 6
+      bind = SHIFT, 6, submap, reset
+      bind = SHIFT, 7, movetoworkspace, 7
+      bind = SHIFT, 7, submap, reset
+      bind = SHIFT, 8, movetoworkspacesilent, 8
+      bind = SHIFT, 8, submap, reset
+      bind = SHIFT, 9, movetoworkspacesilent, 9
+      bind = SHIFT, 9, submap, reset
+      bind = SHIFT, 0, movetoworkspacesilent, 10
+      bind = SHIFT, 0, submap, reset
+
+      # Mouse bindings in submap
+      bindm = , mouse:272, movewindow
+      bindm = , mouse:273, resizewindow
+
+      # Multiple ways to exit submap
+      bindr = , mouse:278, submap, reset
+      bind = , Escape, submap, reset
+      bind = , catchall, submap, reset
+
+      submap = reset
+    '';
   };
 }
