@@ -10,6 +10,15 @@ echo "Fetching latest version from npm..."
 version=$(npm view @anthropic-ai/claude-code version)
 echo "Latest version: $version"
 
+# Get current version from package.nix
+current_version=$(grep -oP 'version = "\K[^"]+' "$PACKAGE_NIX")
+echo "Current version: $current_version"
+
+if [[ "$version" == "$current_version" ]]; then
+    echo "Already at latest version, nothing to do."
+    exit 0
+fi
+
 # Update version in package.nix
 echo "Updating version in package.nix..."
 sed -i "s/version = \"[^\"]*\"/version = \"$version\"/" "$PACKAGE_NIX"

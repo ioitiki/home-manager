@@ -32,6 +32,7 @@ in
   home = {
     enableNixpkgsReleaseCheck = false;
     packages = with pkgs; [
+      android-file-transfer
       figma-linux
       ripgrep
       lazydocker

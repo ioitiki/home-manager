@@ -10,6 +10,8 @@
       # rust
       cg = "cargo";
       cgr = "cargo run";
+      # claude code
+      cr = "claude --resume";
       c = "claude";
       claudeupdate = "~/.config/home-manager/claude-code/update.sh";
       # system
@@ -64,6 +66,8 @@
       sgit = "sudo git";
       gs = "git status";
       gck = "git checkout";
+      glog5 = "glog | head -5";
+      glog20 = "glog | head -20";
       # yarn
       yd = "yarn deploy";
       ydd = "yarn deploy round-five";
@@ -83,10 +87,6 @@
 
       ".." = "cd ..";
       "myip" = "curl -4 icanhazip.com";
-
-      db_ip_whitelist_bee = "doctl db firewalls append bf2de5ef-4084-48d9-a97b-096077dfb482 --rule ip_addr:\$(curl ifconfig.io -4)";
-      redis_ip_whitelist_bee = "doctl db firewalls append 9559078b-d046-4b3a-b355-bab8d28e77de --rule ip_addr:\$(curl ifconfig.io -4)";
-      dbip = "db_ip_whitelist_bee && redis_ip_whitelist_bee";
 
       bd = "base64d";
       be = "base64e";
@@ -134,6 +134,29 @@
 
       clipadd() {
         echo -n "$1" | wl-copy && echo -n "$1" | cliphist store
+      }
+
+      dbip() {
+        local ip=$(curl -s ifconfig.io -4)
+        case "$PWD" in
+          */pledge)
+              echo "Path ends with /pledge"
+              doctl db firewalls append 8476b581-ff95-4cc8-adae-11d9f28a69d8 --rule ip_addr:$ip
+              ;;
+          */bee)
+              echo "Path ends with /bee"
+              doctl db firewalls append bf2de5ef-4084-48d9-a97b-096077dfb482 --rule ip_addr:$ip # db
+              doctl db firewalls append 89261b7a-a15a-418c-a8e0-6ea297241e11 --rule ip_addr:$ip # dw
+              doctl db firewalls append 99de337e-bf42-4191-a753-8ec88378f61f --rule ip_addr:$ip # hat
+              ;;
+          */nft)
+              echo "Path ends with /nft"
+              doctl db firewalls append 21f8d593-3b96-402e-8466-333b655bea25 --rule ip_addr:$ip # idk
+              ;;
+          *)
+              echo "wrong path $PWD"
+              ;;
+        esac
       }
     '';
   };
