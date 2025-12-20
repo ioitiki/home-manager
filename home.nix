@@ -10,6 +10,52 @@ let
       versionCheckHook
       ;
   };
+  zed-editor = import ./zed-editor/package.nix {
+    inherit (pkgs)
+      lib
+      rustPlatform
+      fetchFromGitHub
+      cmake
+      copyDesktopItems
+      curl
+      perl
+      pkg-config
+      protobuf
+      fontconfig
+      freetype
+      libgit2
+      openssl
+      sqlite
+      zlib
+      zstd
+      alsa-lib
+      libxkbcommon
+      wayland
+      libglvnd
+      xorg
+      stdenv
+      makeFontsConf
+      vulkan-loader
+      envsubst
+      nix-update-script
+      cargo-about
+      versionCheckHook
+      buildFHSEnv
+      cargo-bundle
+      git
+      apple-sdk_15
+      darwinMinVersionHook
+      makeBinaryWrapper
+      nodejs
+      libGL
+      libX11
+      libXext
+      livekit-libwebrtc
+      testers
+      writableTmpDirAsHomeHook
+      ;
+    zed-editor = pkgs.zed-editor;
+  };
 in
 {
   imports = [
@@ -41,7 +87,7 @@ in
       gnome-calculator
       buf
       obs-studio
-      zed-editor-fhs
+      zed-editor.fhs
       neofetch
       cups-brother-hll2340dw
       resources

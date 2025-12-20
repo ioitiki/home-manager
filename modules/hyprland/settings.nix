@@ -128,7 +128,8 @@
         "$mainMod CTRL, B, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"backend-monorepo\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/bee/backend-monorepo; fi'"
         "$mainMod CTRL, H, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"home-manager\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/.config/home-manager; fi'"
         # Resize and position active window to custom dimensions (3953x1384 at 1160,44)
-        "$mainMod SHIFT, F, exec, hyprctl dispatch togglefloating active && hyprctl dispatch movewindowpixel exact 1028 43,active && hyprctl dispatch resizewindowpixel exact 4085 1383,active"
+        "$mainMod SHIFT, F, exec, hyprctl dispatch togglefloating active && hyprctl dispatch movewindowpixel exact 3100 43,active && hyprctl dispatch resizewindowpixel exact 3833 1383,active"
+        "$mainMod CTRL SHIFT, F, exec, hyprctl dispatch togglefloating active && hyprctl dispatch movewindowpixel exact 2948 43,active && hyprctl dispatch resizewindowpixel exact 4085 1383,active"
         # Span active window across both monitors (assumes 2× 2560x1440 at 0x0 and 2560x0)
         # Adjust numbers if your monitor layout changes
         "$mainMod, B, exec, sh -c \"if hyprctl getoption plugin:hyprbars:enabled | grep -q 'int: 1'; then hyprctl keyword plugin:hyprbars:enabled 0; else hyprctl keyword plugin:hyprbars:enabled 1; fi\""
@@ -261,11 +262,17 @@
         "center, class:^(Cursor)$, title:^(Are you sure.*)"
         "size 400 200, class:^(Cursor)$, title:^(Are you sure.*)"
         "center, floating:1, maxsize:600 400"
+        # GNOME Calculator: floating at specific position and size
+        "float, class:^(org.gnome.Calculator)$"
+        "size 442 726, class:^(org.gnome.Calculator)$"
+        "move 1847 218, class:^(org.gnome.Calculator)$"
       ];
 
       monitor = [
-        "DP-3, 2560x1440@144,0x0,1"
-        "HDMI-A-1, 2560x1440@144,2560x0,1"
+        "DP-2, 1920x1080@60,0x0,1"
+        "DP-1, 1920x1080@60,0x1080,1"
+        "DP-3, 2560x1440@144,1920x0,1"
+        "HDMI-A-1, 2560x1440@144,4480x0,1"
       ];
 
       workspace = [
