@@ -106,7 +106,7 @@ let
 in
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "zed-editor";
-  version = "0.216.1";
+  version = "v0.219.3-pre";
 
   outputs = [
     "out"
@@ -119,7 +119,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     owner = "zed-industries";
     repo = "zed";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-7rLrPXnPvKTE4w9FYs4RHSs3wBbmwbaWtTdvC2iC6yY=";
+    hash = "";
   };
 
   postPatch = ''
@@ -139,7 +139,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
     rm -r $out/git/*/candle-book/
   '';
 
-  cargoHash = "sha256-cnjLwoes71/M0vMB01dLBB7pujlVHT82hfQxwr/Z4XQ=";
+  cargoHash = "";
 
   nativeBuildInputs = [
     cmake
@@ -208,9 +208,8 @@ rustPlatform.buildRustPackage (finalAttrs: {
     # Used by `zed --version`
     RELEASE_VERSION = finalAttrs.version;
     LK_CUSTOM_WEBRTC = livekit-libwebrtc;
+    RUSTFLAGS = lib.optionalString withGLES "--cfg gles";
   };
-
-  RUSTFLAGS = lib.optionalString withGLES "--cfg gles";
 
   preBuild = ''
     bash script/generate-licenses
@@ -311,14 +310,13 @@ rustPlatform.buildRustPackage (finalAttrs: {
     versionCheckHook
   ];
   versionCheckProgram = "${placeholder "out"}/bin/zeditor";
-  versionCheckProgramArg = "--version";
   doInstallCheck = true;
 
   passthru = {
     updateScript = nix-update-script {
       extraArgs = [
         "--version-regex"
-        "^v(?!.*(?:-pre|0\.999999\.0|0\.9999-temporary)$)(.+)$"
+        "^v(?!.*(?:-pre|0\\.999999\\.0|0\\.9999-temporary)$)(.+)$"
 
         # use github releases instead of git tags
         # zed sometimes moves git tags, making them unreliable

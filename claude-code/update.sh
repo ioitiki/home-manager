@@ -23,6 +23,19 @@ fi
 echo "Updating version in package.nix..."
 sed -i "s/version = \"[^\"]*\"/version = \"$version\"/" "$PACKAGE_NIX"
 
+# Generate new package-lock.json
+echo "Generating package-lock.json for version $version..."
+TEMP_DIR=$(mktemp -d)
+cd "$TEMP_DIR"
+npm pack "@anthropic-ai/claude-code@$version"
+tar -xzf *.tgz
+cd package
+npm install --package-lock-only --legacy-peer-deps --ignore-scripts
+cp package-lock.json "$SCRIPT_DIR/package-lock.json"
+cd "$SCRIPT_DIR"
+rm -rf "$TEMP_DIR"
+echo "package-lock.json generated successfully"
+
 # Clear both hashes
 echo "Clearing hashes..."
 sed -i 's/hash = "sha256-[^"]*"/hash = ""/' "$PACKAGE_NIX"
