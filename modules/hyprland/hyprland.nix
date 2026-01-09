@@ -4,7 +4,7 @@
   # User-level packages used with Hyprland
   home.packages = with pkgs; [
     hyprpaper
-    xfce.thunar
+    thunar
     cliphist
     wl-clipboard
 

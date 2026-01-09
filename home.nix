@@ -48,12 +48,12 @@ let
       makeBinaryWrapper
       nodejs
       libGL
-      libX11
-      libXext
       livekit-libwebrtc
       testers
       writableTmpDirAsHomeHook
       ;
+    libX11 = pkgs.xorg.libX11;
+    libXext = pkgs.xorg.libXext;
     zed-editor = pkgs.zed-editor;
   };
 in
@@ -81,6 +81,8 @@ in
       android-file-transfer
       figma-linux
       ripgrep
+      vim
+      # beekeeper-studio
       lazydocker
       claude-code
       zenity

@@ -68,6 +68,7 @@
       gck = "git checkout";
       glog5 = "glog | head -5";
       glog20 = "glog | head -20";
+      gm = "git merge --ff-only";
       # yarn
       yd = "yarn deploy";
       ydd = "yarn deploy round-five";
