@@ -59,12 +59,14 @@
         };
 
         # Autotiling configuration
+        # Only enable on workspace 10 (vertical monitor)
         autotile = {
-          enable = false;
+          enable = true;
           ephemeral_groups = true;
-          trigger_width = 0;
+          # Split vertically when width < 1200 (vertical monitor is 1080 wide)
+          trigger_width = 1200;
           trigger_height = 0;
-          workspaces = "all";
+          workspaces = "10";
         };
       };
 
@@ -82,6 +84,9 @@
         "$mainMod SHIFT, right, movewindow, mon:r"
         "$mainMod, j, hy3:movefocus, left"
         "$mainMod, k, hy3:movefocus, right"
+        # Toggle split orientation (h=horizontal/columns, v=vertical/stacked)
+        "$mainMod, backslash, hy3:changegroup, toggletab"
+        "$mainMod SHIFT, backslash, hy3:changegroup, opposite"
       ];
     };
   };

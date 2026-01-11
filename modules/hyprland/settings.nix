@@ -49,19 +49,19 @@
           # name, enable, speed, curve, style
 
           # Windows
-          "windowsIn,   0, 4, easeOutCubic,  popin 20%" # window open
-          "windowsOut,  0, 4, fluent_decel,  popin 80%" # window close.
+          "windowsIn, 0, 4, easeOutCubic, popin 20%" # window open
+          "windowsOut, 0, 4, fluent_decel, popin 80%" # window close.
           "windowsMove, 1, 2, fluent_decel, slide" # everything in between, moving, dragging, resizing.
 
           # Fade
-          "fadeIn,      1, 6,   fade_curve" # fade in (open) -> layers and windows
-          "fadeOut,     1, 5,   fade_curve" # fade out (close) -> layers and windows
-          "fadeSwitch,  0, 1,   easeOutCirc" # fade on changing activewindow and its opacity
-          "fadeShadow,  1, 10,  easeOutCirc" # fade on changing activewindow for shadows
-          "fadeDim,     1, 4,   fluent_decel" # the easing of the dimming of inactive windows
-          # "border,      1, 2.7, easeOutCirc"  # for animating the border's color switch speed
-          # "borderangle, 1, 30,  fluent_decel, once" # for animating the border's gradient angle - styles: once (default), loop
-          "workspaces,  1, 4,   easeOutCubic, fade" # styles: slide, slidevert, fade, slidefade, slidefadevert
+          "fadeIn, 1, 6, fade_curve" # fade in (open) -> layers and windows
+          "fadeOut, 1, 5, fade_curve" # fade out (close) -> layers and windows
+          "fadeSwitch, 0, 1, easeOutCirc" # fade on changing activewindow and its opacity
+          "fadeShadow, 1, 10, easeOutCirc" # fade on changing activewindow for shadows
+          "fadeDim, 1, 4, fluent_decel" # the easing of the dimming of inactive windows
+          # "border, 1, 2.7, easeOutCirc"  # for animating the border's color switch speed
+          # "borderangle, 1, 30, fluent_decel, once" # for animating the border's gradient angle - styles: once (default), loop
+          "workspaces, 1, 4, easeOutCubic, fade" # styles: slide, slidevert, fade, slidefade, slidefadevert
         ];
       };
 
@@ -200,79 +200,75 @@
         "$mainMod, mouse:274, movewindow"
       ];
 
-      # windowrule
+      # Hyprland 0.53+ windowrule syntax: RULE, match:CONDITION value
       windowrule = [
-        "float,class:^(file_progress)$"
-        "float,class:^(confirm)$"
-        "float,class:^(dialog)$"
-        "float,class:^(download)$"
-        "float,class:^(notification)$"
-        "float,class:^(error)$"
-        "float,class:^(confirmreset)$"
-        "float,title:^(Open File)$"
-        "float,title:^(File Upload)$"
-        "float,title:^(branchdialog)$"
-        "float,title:^(Confirm to replace files)$"
-        "float,title:^(File Operation Progress)$"
-        "float,title:^(Select what to share)$"
-        "float,class:^(DBeaver)$"
-        "float,class:^(dbeaver)$"
-        "float,class:^(Slack)$"
-        "float,class:^(slack)$"
-        "float,class:^(Alacritty)$"
-        "float,class:^(alacritty)$"
-        "float,title:^(Sign in - Google Accounts - Vivaldi)$"
-        "suppressevent maximize, class:.*"
-        "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
-      ];
-
-      windowrulev2 = [
-        "workspace special:slack silent, class:^(Slack)$"
-        "workspace special:slack silent, class:^(slack)$"
+        "float on, match:class ^(file_progress)$"
+        "float on, match:class ^(confirm)$"
+        "float on, match:class ^(dialog)$"
+        "float on, match:class ^(download)$"
+        "float on, match:class ^(notification)$"
+        "float on, match:class ^(error)$"
+        "float on, match:class ^(confirmreset)$"
+        "float on, match:title ^(Open File)$"
+        "float on, match:title ^(File Upload)$"
+        "float on, match:title ^(branchdialog)$"
+        "float on, match:title ^(Confirm to replace files)$"
+        "float on, match:title ^(File Operation Progress)$"
+        "float on, match:title ^(Select what to share)$"
+        "float on, match:class ^(DBeaver)$"
+        "float on, match:class ^(dbeaver)$"
+        "float on, match:class ^(Slack)$"
+        "float on, match:class ^(slack)$"
+        "float on, match:class ^(Alacritty)$"
+        "float on, match:class ^(alacritty)$"
+        "float on, match:title ^(Sign in - Google Accounts - Vivaldi)$"
+        "suppress_event maximize, match:class .*"
+        "no_focus on, match:class ^$, match:title ^$, match:xwayland true, match:float true, match:fullscreen 0"
+        "workspace special:slack silent, match:class ^(Slack)$"
+        "workspace special:slack silent, match:class ^(slack)$"
         # Slack: sized and centered
-        "size 1884 1016, class:^(Slack)$"
-        "size 1884 1016, class:^(slack)$"
-        "center, class:^(Slack)$"
-        "center, class:^(slack)$"
-        "workspace special:rambox silent, class:^(Rambox)$"
-        "workspace special:rambox silent, class:^(rambox)$"
-        "workspace special:dbeaver silent, class:^(DBeaver)$"
-        "workspace special:dbeaver silent, class:^(dbeaver)$"
+        "size 1884 1016, match:class ^(Slack)$"
+        "size 1884 1016, match:class ^(slack)$"
+        "center on, match:class ^(Slack)$"
+        "center on, match:class ^(slack)$"
+        "workspace special:rambox silent, match:class ^(Rambox)$"
+        "workspace special:rambox silent, match:class ^(rambox)$"
+        "workspace special:dbeaver silent, match:class ^(DBeaver)$"
+        "workspace special:dbeaver silent, match:class ^(dbeaver)$"
         # DBeaver: sized and centered
-        "size 1909 1068, class:^(DBeaver)$"
-        "size 1909 1068, class:^(dbeaver)$"
-        "center, class:^(DBeaver)$"
-        "center, class:^(dbeaver)$"
-        "workspace special:alacritty silent, class:^(Alacritty)$"
-        "workspace special:alacritty silent, class:^(alacritty)$"
+        "size 1909 1068, match:class ^(DBeaver)$"
+        "size 1909 1068, match:class ^(dbeaver)$"
+        "center on, match:class ^(DBeaver)$"
+        "center on, match:class ^(dbeaver)$"
+        "workspace special:alacritty silent, match:class ^(Alacritty)$"
+        "workspace special:alacritty silent, match:class ^(alacritty)$"
         # Manual placement for three terminal columns on 2560x1440 monitor
         # Even 15px outer/inner gaps, centered in the top third (y≈80), height 1200
         # Widths sum to 2500 (2560 - 4*15): 833, 833, 834
-        "size 833 1200, class:^(Alacritty)$, title:^(term-left)$"
-        "move 15 80, class:^(Alacritty)$, title:^(term-left)$"
-        "size 833 1200, class:^(Alacritty)$, title:^(term-middle)$"
-        "move 863 80, class:^(Alacritty)$, title:^(term-middle)$"
-        "size 834 1200, class:^(Alacritty)$, title:^(term-right)$"
-        "move 1711 80, class:^(Alacritty)$, title:^(term-right)$"
-        "bordercolor rgba(00ff00ff), fullscreen:1" # Green border when in fullscreen/mono mode
-        # "size 95% 95%, fullscreen:1" # Make fullscreen window slightly smaller to show border
-        # "center, fullscreen:1" # Center the fullscreen window
+        "size 833 1200, match:class ^(Alacritty)$, match:title ^(term-left)$"
+        "move 15 80, match:class ^(Alacritty)$, match:title ^(term-left)$"
+        "size 833 1200, match:class ^(Alacritty)$, match:title ^(term-middle)$"
+        "move 863 80, match:class ^(Alacritty)$, match:title ^(term-middle)$"
+        "size 834 1200, match:class ^(Alacritty)$, match:title ^(term-right)$"
+        "move 1711 80, match:class ^(Alacritty)$, match:title ^(term-right)$"
+        "border_color rgba(00ff00ff), match:fullscreen 1" # Green border when in fullscreen/mono mode
+        # "size 95% 95%, match:fullscreen 1" # Make fullscreen window slightly smaller to show border
+        # "center on, match:fullscreen 1" # Center the fullscreen window
 
-        # Add these new Cursor rules:
-        "center, class:^(Cursor)$, floating:1"
-        "center, class:^(Cursor)$, title:^(Are you sure.*)"
-        "size 400 200, class:^(Cursor)$, title:^(Are you sure.*)"
-        "center, floating:1, maxsize:600 400"
+        # Cursor rules:
+        "center on, match:class ^(Cursor)$, match:float true"
+        "center on, match:class ^(Cursor)$, match:title ^(Are you sure.*)"
+        "size 400 200, match:class ^(Cursor)$, match:title ^(Are you sure.*)"
         # GNOME Calculator: floating at specific position and size
-        "float, class:^(org.gnome.Calculator)$"
-        "size 442 726, class:^(org.gnome.Calculator)$"
-        "move 1847 218, class:^(org.gnome.Calculator)$"
+        "float on, match:class ^(org.gnome.Calculator)$"
+        "size 442 726, match:class ^(org.gnome.Calculator)$"
+        "move 1847 218, match:class ^(org.gnome.Calculator)$"
       ];
 
       monitor = [
-        "DP-1, 1920x1080@60,0x0,1,transform,3" # 24" vertical monitor (rotated 270°)
-        "DP-3, 2560x1440@144,1080x0,1"         # Main wide monitor
-        "HDMI-A-1, 2560x1440@144,3640x0,1"     # Right wide monitor
+        "DP-1, 1920x1080@60,0x-120,1,transform,3" # 24" vertical monitor (rotated 270°, raised 100px)
+        "DP-3, 2560x1440@144,1080x0,1" # Main wide monitor
+        "HDMI-A-1, 2560x1440@144,3640x0,1" # Right wide monitor
       ];
 
       workspace = [
