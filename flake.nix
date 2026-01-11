@@ -12,7 +12,7 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.50.0";
+      url = "github:hyprwm/Hyprland/v0.53.0";
     };
 
     # Hyprspace = {
@@ -31,12 +31,12 @@
     };
 
     hyprland-plugins = {
-      url = "github:hyprwm/hyprland-plugins/v0.50.0";
+      url = "github:hyprwm/hyprland-plugins/v0.53.0";
       inputs.hyprland.follows = "hyprland";
     };
 
     hy3 = {
-      url = "github:outfoxxed/hy3?ref=hl0.50.0";
+      url = "github:outfoxxed/hy3?ref=hl0.53.0";
       inputs.hyprland.follows = "hyprland";
     };
   };
