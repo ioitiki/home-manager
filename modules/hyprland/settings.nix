@@ -122,7 +122,7 @@
         "$mainMod, Q, killactive"
         "$mainMod CTRL, M, exit,"
         "$mainMod, O, exec, $fileManager"
-        "$mainMod, F, exec, hyprctl dispatch togglefloating active && hyprctl dispatch resizewindowpixel exact 2169 1274,active && hyprctl dispatch centerwindow"
+        "$mainMod, F, exec, sh -c 'if [ \"$(hyprctl activewindow -j | jq .floating)\" = \"false\" ]; then hyprctl dispatch togglefloating active && hyprctl dispatch resizewindowpixel exact 2169 1274,active && hyprctl dispatch centerwindow; else hyprctl dispatch togglefloating active; fi'"
         "$mainMod, M, fullscreen, 0" # Toggle fullscreen (mono layout)
         "$mainMod CTRL, E, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"mfa-trading\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/trading/mfa-trading; fi'"
         "$mainMod CTRL, B, exec, sh -c 'addr=$(hyprctl clients -j | jq -r \".[] | select(.class == \\\"dev.zed.Zed\\\" and (.title | contains(\\\"backend-monorepo\\\"))) | .address\"); if [ -n \"$addr\" ]; then hyprctl dispatch focuswindow address:$addr; else zeditor /home/andy/bee/backend-monorepo; fi'"
@@ -263,10 +263,13 @@
         "float on, match:class ^(org.gnome.Calculator)$"
         "size 442 726, match:class ^(org.gnome.Calculator)$"
         "move 1847 218, match:class ^(org.gnome.Calculator)$"
+
+        # Chrome: always open in workspace 9 silently (for scraper, not interactive use)
+        "workspace 9 silent, match:class ^(chromium-browser)$"
       ];
 
       monitor = [
-        "DP-1, 1920x1080@60,0x-120,1,transform,3" # 24" vertical monitor (rotated 270°, raised 100px)
+        "DP-1, 1920x1080@60,0x-120,1,transform,1" # 24" vertical monitor (rotated 270°, raised 100px)
         "DP-3, 2560x1440@144,1080x0,1" # Main wide monitor
         "HDMI-A-1, 2560x1440@144,3640x0,1" # Right wide monitor
       ];

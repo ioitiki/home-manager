@@ -5,18 +5,34 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 HOME_MANAGER_DIR="$(dirname "$SCRIPT_DIR")"
 PACKAGE_NIX="$SCRIPT_DIR/package.nix"
 
-# Get latest version from npm
-echo "Fetching latest version from npm..."
-version=$(npm view @anthropic-ai/claude-code version)
-echo "Latest version: $version"
+DOWNGRADE_PATCH=false
+if [[ "${1:-}" == "--downgrade-patch" || "${1:-}" == "-p" ]]; then
+    DOWNGRADE_PATCH=true
+fi
 
 # Get current version from package.nix
 current_version=$(grep -oP 'version = "\K[^"]+' "$PACKAGE_NIX")
 echo "Current version: $current_version"
 
-if [[ "$version" == "$current_version" ]]; then
-    echo "Already at latest version, nothing to do."
-    exit 0
+if [[ "$DOWNGRADE_PATCH" == true ]]; then
+    # Decrement patch version
+    IFS='.' read -r major minor patch <<< "$current_version"
+    if [[ "$patch" -le 0 ]]; then
+        echo "Cannot downgrade patch version below 0"
+        exit 1
+    fi
+    version="$major.$minor.$((patch - 1))"
+    echo "Downgrading to: $version"
+else
+    # Get latest version from npm
+    echo "Fetching latest version from npm..."
+    version=$(npm view @anthropic-ai/claude-code version)
+    echo "Latest version: $version"
+
+    if [[ "$version" == "$current_version" ]]; then
+        echo "Already at latest version, nothing to do."
+        exit 0
+    fi
 fi
 
 # Update version in package.nix

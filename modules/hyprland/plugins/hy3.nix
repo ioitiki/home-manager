@@ -63,9 +63,9 @@
         autotile = {
           enable = true;
           ephemeral_groups = true;
-          # Split vertically when width < 1200 (vertical monitor is 1080 wide)
-          trigger_width = 1200;
-          trigger_height = 0;
+          # Force vertical-only stacking: 0 = always vertical, -1 = never horizontal
+          trigger_width = 0;
+          trigger_height = -1;
           workspaces = "10";
         };
       };

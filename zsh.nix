@@ -14,6 +14,7 @@
       cr = "claude --resume";
       c = "claude";
       claudeupdate = "~/.config/home-manager/claude-code/update.sh";
+      cmsg = "claude --permission-mode bypassPermissions '/msg'";
       # system
       lst = "ls -lt --time=ctime";
       # zsh

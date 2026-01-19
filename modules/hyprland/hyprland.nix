@@ -7,6 +7,8 @@
     thunar
     cliphist
     wl-clipboard
+    sunshine
+    flyctl
 
     # Dark theme support for various apps
     adwaita-qt

@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   # Ensure hypridle is installed
@@ -19,5 +19,3 @@
     }
   '';
 }
-
-
