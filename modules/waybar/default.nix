@@ -60,6 +60,7 @@ in
     ];
     modules-center = [ ];
     modules-right = [
+      "custom/voice-to-text"
       "custom/calculator"
       "custom/calendar"
       "clock#bkk"
@@ -110,6 +111,12 @@ in
       format = "";
       tooltip = false;
       on-click = "hyprctl dispatch exec 'zenity --calendar'";
+    };
+    "custom/voice-to-text" = {
+      exec = "if [ -f /tmp/voice-to-text.pid ] && kill -0 $(cat /tmp/voice-to-text.pid) 2>/dev/null; then echo '{\"text\": \"\", \"class\": \"active\", \"tooltip\": \"Voice-to-text active (Super+Y to stop)\"}'; else echo '{\"text\": \"\", \"class\": \"inactive\", \"tooltip\": \"Voice-to-text off (Super+Y to start)\"}'; fi";
+      return-type = "json";
+      interval = 1;
+      on-click = "~/.config/home-manager/scripts/voice-to-text-toggle.sh";
     };
     clock = {
       format = "{:%a %b %d  %I:%M %p}";
@@ -233,6 +240,19 @@ in
       margin-right: 10px;
       color: ${text_color};
       font-size: 20px;
+    }
+
+    #custom-voice-to-text {
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-right: 10px;
+      font-size: 18px;
+    }
+    #custom-voice-to-text.active {
+      color: ${red};
+    }
+    #custom-voice-to-text.inactive {
+      color: ${blue};
     }
 
     window#waybar {

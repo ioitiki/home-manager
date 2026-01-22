@@ -140,6 +140,7 @@
         "CTRL SHIFT, 4, exec, $screenShotRegion"
         "$mainMod, V, exec, rofi -modi clipboard:cliphist-rofi-img -show clipboard -show-icons"
         "$mainMod, E, exec, ~/.local/bin/emojipick"
+        "$mainMod, Y, exec, ~/.config/home-manager/scripts/voice-to-text-toggle.sh"
         "$mainMod SHIFT, W, exec, hyprctl dispatch killactive"
         "$mainMod, X, exec, $powerMenu"
         # "$mainMod, P, pseudo, "  # Not needed with hy3
@@ -155,6 +156,8 @@
         "$mainMod, 8, workspace, 8"
         "$mainMod, 9, workspace, 9"
         "$mainMod, 0, workspace, 10"
+        "$mainMod, minus, workspace, 11"
+        "$mainMod, equal, workspace, 12"
         "$mainMod SHIFT, 1, movetoworkspace, 1"
         "$mainMod SHIFT, 2, movetoworkspacesilent, 2"
         "$mainMod SHIFT, 3, movetoworkspacesilent, 3"
@@ -165,6 +168,8 @@
         "$mainMod SHIFT, 8, movetoworkspacesilent, 8"
         "$mainMod SHIFT, 9, movetoworkspacesilent, 9"
         "$mainMod SHIFT, 0, movetoworkspacesilent, 10"
+        "$mainMod SHIFT, minus, movetoworkspacesilent, 11"
+        "$mainMod SHIFT, equal, movetoworkspacesilent, 12"
         "$mainMod, S, togglespecialworkspace, slack"
         "$mainMod SHIFT, S, movetoworkspace, special:slack"
         "$mainMod, R, togglespecialworkspace, rambox"
@@ -285,6 +290,8 @@
         "8, monitor:HDMI-A-1"
         "9, monitor:HDMI-A-1"
         "10, monitor:DP-1" # Vertical monitor
+        "11, monitor:HDMI-A-1"
+        "12, monitor:HDMI-A-1"
       ];
 
     };
@@ -340,6 +347,10 @@
       bind = , 9, submap, reset
       bind = , 0, workspace, 10
       bind = , 0, submap, reset
+      bind = , minus, workspace, 11
+      bind = , minus, submap, reset
+      bind = , equal, workspace, 12
+      bind = , equal, submap, reset
 
       # Move to workspace with SHIFT (exit after move)
       bind = SHIFT, 1, movetoworkspace, 1
@@ -362,6 +373,10 @@
       bind = SHIFT, 9, submap, reset
       bind = SHIFT, 0, movetoworkspacesilent, 10
       bind = SHIFT, 0, submap, reset
+      bind = SHIFT, minus, movetoworkspacesilent, 11
+      bind = SHIFT, minus, submap, reset
+      bind = SHIFT, equal, movetoworkspacesilent, 12
+      bind = SHIFT, equal, submap, reset
 
       # Mouse bindings in submap
       bindm = , mouse:272, movewindow

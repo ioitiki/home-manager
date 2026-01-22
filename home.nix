@@ -1,6 +1,9 @@
 { pkgs, ... }:
 
 let
+  whisper-cpp-cuda = pkgs.whisper-cpp.override {
+    cudaSupport = true;
+  };
   claude-code = import ./claude-code/package.nix {
     inherit (pkgs)
       lib
@@ -77,8 +80,10 @@ in
 
   home = {
     enableNixpkgsReleaseCheck = false;
+    sessionPath = [ "$HOME/.config/home-manager/scripts" ];
     packages = with pkgs; [
       android-file-transfer
+      whisper-cpp-cuda
       figma-linux
       ripgrep
       vim
@@ -103,6 +108,7 @@ in
       pavucontrol
       pamixer
       solaar
+      wtype
       # Add Language Servers
       yaml-language-server
       nodePackages.typescript-language-server

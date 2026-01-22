@@ -1,6 +1,17 @@
-{ ... }:
+{ pkgs, ... }:
 
+let
+  zsh-claudecode-completion = pkgs.fetchFromGitHub {
+    owner = "wbingli";
+    repo = "zsh-claudecode-completion";
+    rev = "main";
+    sha256 = "sha256-mquvp8d6EXFhInNAZjx4lVfKB9iGsV5TLZX+PbIZ3BQ=";
+  };
+in
 {
+  # Copy completion file to user-owned directory (avoids /nix/store permission issues)
+  home.file.".zsh/completions/_claude".source = "${zsh-claudecode-completion}/_claude";
+
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
@@ -114,13 +125,24 @@
       theme = "miRobbyRussle";
     };
 
+    # Set before oh-my-zsh loads
+    localVariables = {
+      ZSH_DISABLE_COMPFIX = "true";
+    };
+
     envExtra = ''
+      # Add custom completions to fpath before oh-my-zsh compinit runs
+      fpath=(~/.zsh/completions $fpath)
+
       export NPM_AUTH_TOKEN=MjA5ODUyZWFlNDI2OTAyNWFjOWVhZjI0NTBjZjk0NTc6Y2JkNzdiMmIwOWIzNmZhMDc2OTgzM2U1MjEwZDAxOWI2OTRmNDk0ZTRlNmU5ZTllNTkzN2ZjMmFjODNjM2IzYmNj
       export KUBE_EDITOR="zeditor --wait"
       export EDITOR="zeditor --wait"
     '';
 
     initContent = ''
+      # Use flyctl completions for the fly alias
+      compdef fly=flyctl
+
       # Base64 helper functions
       base64d() {
         echo "$1" | base64 -d
