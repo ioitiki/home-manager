@@ -17,12 +17,11 @@
         "wl-paste --type image --watch cliphist store"
         "hypridle"
         "sleep 0.25; slack"
-        # Launch three terminals with unique titles for manual placement
+        # Launch two terminals with unique titles for manual placement
         "sleep 1; alacritty --title term-left"
-        "sleep 1.1; alacritty --title term-middle"
-        "sleep 1.2; alacritty --title term-right"
+        "sleep 1.1; alacritty --title term-right"
         # Show the special workspace containing the terminals
-        "sleep 1.3; hyprctl dispatch togglespecialworkspace alacritty"
+        "sleep 1.2; hyprctl dispatch togglespecialworkspace alacritty"
       ];
 
       decoration = {
@@ -247,15 +246,13 @@
         "center on, match:class ^(dbeaver)$"
         "workspace special:alacritty silent, match:class ^(Alacritty)$"
         "workspace special:alacritty silent, match:class ^(alacritty)$"
-        # Manual placement for three terminal columns on 2560x1440 monitor
-        # Even 15px outer/inner gaps, centered in the top third (y≈80), height 1200
-        # Widths sum to 2500 (2560 - 4*15): 833, 833, 834
-        "size 833 1200, match:class ^(Alacritty)$, match:title ^(term-left)$"
+        # Manual placement for two terminal columns on 2560x1440 monitor
+        # 15px outer gaps, 15px gap between terminals, height 1200
+        # Left: 2/3 width (1677px), Right: 1/3 width (838px)
+        "size 1677 1200, match:class ^(Alacritty)$, match:title ^(term-left)$"
         "move 15 80, match:class ^(Alacritty)$, match:title ^(term-left)$"
-        "size 833 1200, match:class ^(Alacritty)$, match:title ^(term-middle)$"
-        "move 863 80, match:class ^(Alacritty)$, match:title ^(term-middle)$"
-        "size 834 1200, match:class ^(Alacritty)$, match:title ^(term-right)$"
-        "move 1711 80, match:class ^(Alacritty)$, match:title ^(term-right)$"
+        "size 838 1200, match:class ^(Alacritty)$, match:title ^(term-right)$"
+        "move 1707 80, match:class ^(Alacritty)$, match:title ^(term-right)$"
         "border_color rgba(00ff00ff), match:fullscreen 1" # Green border when in fullscreen/mono mode
         # "size 95% 95%, match:fullscreen 1" # Make fullscreen window slightly smaller to show border
         # "center on, match:fullscreen 1" # Center the fullscreen window

@@ -7,10 +7,14 @@ let
   claude-code = import ./claude-code/package.nix {
     inherit (pkgs)
       lib
+      stdenv
       buildNpmPackage
       fetchzip
       writableTmpDirAsHomeHook
       versionCheckHook
+      bubblewrap
+      procps
+      socat
       ;
   };
   zed-editor = import ./zed-editor/package.nix {

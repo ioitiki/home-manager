@@ -66,6 +66,12 @@ let
   };
 in
 {
-  xdg.configFile."sunshine/sunshine.conf".text = sunshineConf;
-  xdg.configFile."sunshine/apps.json".text = appsJson;
+  xdg.configFile."sunshine/sunshine.conf" = {
+    text = sunshineConf;
+    force = true;
+  };
+  xdg.configFile."sunshine/apps.json" = {
+    text = appsJson;
+    force = true;
+  };
 }
