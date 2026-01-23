@@ -12,7 +12,8 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.53.2";
+      # Pinned to specific commit - v0.53.2 tag has glaze build regression
+      url = "github:hyprwm/Hyprland/ab1d80f3d6aebd57a0971b53a1993b1c1dfe0b09";
     };
 
     # Hyprspace = {
