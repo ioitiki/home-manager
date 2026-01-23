@@ -12,7 +12,7 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland/v0.53.1";
+      url = "github:hyprwm/Hyprland/v0.53.2";
     };
 
     # Hyprspace = {

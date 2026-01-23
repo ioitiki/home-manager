@@ -6,14 +6,11 @@ let
   sunshineConf = ''
     # Anthropic Sunshine configuration for Hyprland
 
-    # Capture method - use wlroots for Hyprland
-    capture = wlroots
+    # Capture method - use kms for Hyprland (requires capSysAdmin)
+    capture = kms
 
     # Encoder settings (adjust based on your GPU)
     encoder = nvenc
-
-    # Quality settings
-    min_fps_factor = 1
 
     # Audio settings
     audio_sink =
